@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "REGISTRO EXITOSO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SucessUser</h2>
+
+<meta http-equiv="refresh" content="5;url=@Url.Action("Index","Home")" />
+
+<div style="max-width:640px;margin:40px auto;padding:28px;background:#eef0ff;border-radius:10px;text-align:center;">
+    <h2>REGISTRO EXITOSO</h2>
+    <p>¡Gracias por registrarte, <strong>@ViewBag.UserName</strong>!</p>
+    <p>Serás redirigido a la página de inicio en 5 segundos. Si no, haz clic <a href="@Url.Action("Index","Home")">aquí.</a>.</p>
+</div>
