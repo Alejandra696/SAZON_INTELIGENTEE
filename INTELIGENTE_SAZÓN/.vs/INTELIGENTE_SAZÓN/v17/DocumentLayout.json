@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:views\\user\\loginuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\views\\user\\registeruser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\views\\user\\registeruser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:views\\user\\registeruser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -58,8 +58,7 @@
               "RelativeToolTip": "Services\\UserService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T01:12:51.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T01:12:51.794Z"
             },
             {
               "$type": "Document",
@@ -71,8 +70,7 @@
               "RelativeToolTip": "Repositories\\UserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T01:21:02.499Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T01:21:02.499Z"
             },
             {
               "$type": "Document",
@@ -84,8 +82,7 @@
               "RelativeToolTip": "Views\\User\\SucessUser.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-27T01:17:39.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T01:17:39.34Z"
             },
             {
               "$type": "Document",
@@ -97,8 +94,7 @@
               "RelativeToolTip": "Dtos\\UserDtos.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T01:10:00.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T01:10:00.039Z"
             },
             {
               "$type": "Document",
@@ -110,8 +106,7 @@
               "RelativeToolTip": "Controllers\\UserController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwEUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T01:02:32.516Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T01:02:32.516Z"
             },
             {
               "$type": "Document",
@@ -123,8 +118,7 @@
               "RelativeToolTip": "Views\\User\\RegisterUser.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-27T00:11:50.622Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T00:11:50.622Z"
             },
             {
               "$type": "Document",
@@ -134,7 +128,7 @@
               "RelativeDocumentMoniker": "Views\\User\\LoginUser.cshtml",
               "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\LoginUser.cshtml",
               "RelativeToolTip": "Views\\User\\LoginUser.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAHYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-09-27T21:44:00.262Z",
               "EditorCaption": ""
