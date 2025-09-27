@@ -10,8 +10,15 @@ namespace Sazon_Inteligente.Services
     {
         public bool Register(UserDtos User)
         {
-            // AQUÍ PODEMOS GUARDARLO EN NUESTRA BASE DE DATOS, POR AHORA LO TENEMOS POR EL CAMINO 
+            // AQUÍ PODEMOS GUARDARLO EN NUESTRA BASE DE DATOS, POR AHORA LO TENEMOS POR EL CAMINO FELIZ
             return true;
         }
+        public bool Login(string username, string password)
+        {
+            // AQUÍ SE HACE LA VALIDACIÓN REAL DE LAS CREDENCIALES
+            return username == "admin" && password == "1234";
+        }
+
     }
 }
+

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+//CONTROLADOR PARA EL REGISTRO DE USUARIOS
 namespace INTELIGENTE_SAZÓN.Controllers
 {
     public class UserController : Controller
@@ -43,6 +44,35 @@ namespace INTELIGENTE_SAZÓN.Controllers
         public ActionResult SucessUser()
         {
             return View();
+        }
+
+
+        //CONTROLADOR PARA EL INICIO DE SESIÒN DE LOS USUARIOS
+
+        //MUESTRA EL FORMULARIO DE LOGIN
+        [HttpGet]
+        public ActionResult LoginUser()
+        {
+            return View(new UserDtos());
+        }
+
+        // PROCESA EL FORMULARIO DE LOGIN
+        [HttpPost]
+        [ValidateAntiForgeryToken] // SEGURIDAD CONTRA ATAQUES CSRF, PARA QUE LOS PERFILES ACTIVOS NO ESTEN EN PELIGROOU
+        public ActionResult Login(UserDtos model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool loginOk = _userService.Login(model.FullName, model.Password);
+                if (loginOk)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError("", "Usuario o contraseña incorrectos.");
+            }
+
+            return View(model);
         }
     }
 }

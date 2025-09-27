@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\views\\user\\loginuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:views\\user\\loginuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\views\\user\\registeruser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:views\\user\\registeruser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:dtos\\userdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\views\\user\\sucessuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\views\\user\\sucessuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:views\\user\\sucessuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|c:\\users\\jenim\\onedrive\\documentos\\ingieneria del software i\\p\u00E1gina web\\sazon_inteligentee\\inteligente_saz\u00F3n\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8AD5EA25-7682-45E5-BF53-17CA948A88CF}|INTELIGENTE_SAZ\u00D3N.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,13 +50,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "Services\\UserService.cs",
               "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Services\\UserService.cs",
               "RelativeToolTip": "Services\\UserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-27T01:12:51.794Z",
               "EditorCaption": ""
@@ -72,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "SucessUser.cshtml",
               "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\SucessUser.cshtml",
               "RelativeDocumentMoniker": "Views\\User\\SucessUser.cshtml",
@@ -85,41 +89,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "UserDtos.cs",
               "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Dtos\\UserDtos.cs",
               "RelativeDocumentMoniker": "Dtos\\UserDtos.cs",
               "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Dtos\\UserDtos.cs",
               "RelativeToolTip": "Dtos\\UserDtos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-27T01:10:00.039Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwEUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-27T01:02:32.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "RegisterUser.cshtml",
               "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\RegisterUser.cshtml",
               "RelativeDocumentMoniker": "Views\\User\\RegisterUser.cshtml",
               "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\RegisterUser.cshtml",
               "RelativeToolTip": "Views\\User\\RegisterUser.cshtml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAIoAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-09-27T00:11:50.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginUser.cshtml",
+              "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\LoginUser.cshtml",
+              "RelativeDocumentMoniker": "Views\\User\\LoginUser.cshtml",
+              "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\LoginUser.cshtml",
+              "RelativeToolTip": "Views\\User\\LoginUser.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-27T21:44:00.262Z",
               "EditorCaption": ""
             }
           ]

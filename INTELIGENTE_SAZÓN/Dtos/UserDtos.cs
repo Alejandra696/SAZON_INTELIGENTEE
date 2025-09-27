@@ -27,4 +27,14 @@ namespace INTELIGENTE_SAZÓN.Dtos
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
+    public class LoginDto
+    {
+        [Required(ErrorMessage = "El usuario es obligatorio.")]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
 }
+
