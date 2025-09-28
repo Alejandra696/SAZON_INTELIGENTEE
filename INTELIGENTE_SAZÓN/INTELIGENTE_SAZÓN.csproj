@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Dtos\ProfePerDtos.cs" />
     <Compile Include="Dtos\UserDtos.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -148,6 +149,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\ImagenAdmi.jpg" />
+    <Content Include="Content\Images\ImagenChefPrin.jpg" />
+    <Content Include="Content\Images\ImagenIngePrin.jpg" />
     <Content Include="Content\Images\Logo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -186,6 +190,8 @@
     <Content Include="Views\User\RegisterUser.cshtml" />
     <Content Include="Views\User\SucessUser.cshtml" />
     <Content Include="Views\User\LoginUser.cshtml" />
+    <Content Include="Views\User\AdmiPrincipalUser.cshtml" />
+    <Content Include="Views\User\AdmiProfePerUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

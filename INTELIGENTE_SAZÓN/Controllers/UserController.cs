@@ -1,10 +1,12 @@
 ﻿using INTELIGENTE_SAZÓN.Dtos;
-using Sazon_Inteligente.Services;
-using System.Web.Mvc;
+using INTELIGENTE_SAZÓN.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Services.Description;
 
 //CONTROLADOR PARA EL REGISTRO DE USUARIOS
 namespace INTELIGENTE_SAZÓN.Controllers
@@ -72,6 +74,88 @@ namespace INTELIGENTE_SAZÓN.Controllers
                 ModelState.AddModelError("", "Usuario o contraseña incorrectos.");
             }
 
+            return View(model);
+        }
+
+        // VISTA DEL ADMINISTRADOR
+        [HttpGet]
+        public ActionResult AdmiPrincipalUser()
+        {
+            return View();
+        }
+
+
+        // VISTA PARA QUE EL ADMI CREE LOS PERFILES PROFESIONALES  
+        [HttpGet]
+        public ActionResult AdmiProfePerUser()
+        {
+            // Muestra la vista con un modelo vacío  
+            return View(new ProfePerDtos());
+        }
+
+        // PROCESA EL FORMULARIO DE LOS PERFILES PROFESIONALES  
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateProfessionalProfile(ProfePerDtos model)
+        {
+            // Solo admin puede acceder
+            if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
+                return RedirectToAction("Login");
+
+            // Valida el modelo
+            if (!ModelState.IsValid)
+                return View(model);
+
+            string savedFilePath = null;
+
+            // Validar archivo PDF  
+            if (model.Certificate != null && model.Certificate.ContentLength > 0)
+            {
+                var allowedExt = new[] { ".pdf" };
+                var ext = Path.GetExtension(model.Certificate.FileName)?.ToLower();
+                if (Array.IndexOf(allowedExt, ext) < 0)
+                {
+                    ModelState.AddModelError("Certificate", "Tipo de archivo no permitido (solo PDF).");
+                    return View(model);
+                }
+
+                const int maxBytes = 5 * 1024 * 1024; // 5 MB  
+                if (model.Certificate.ContentLength > maxBytes)
+                {
+                    ModelState.AddModelError("Certificate", "El archivo excede 5 MB.");
+                    return View(model);
+                }
+
+                // Carpeta de guardado
+                var folder = Server.MapPath("~/Content/certificates");
+                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+
+                // Nombre único
+                var uniqueName = Guid.NewGuid().ToString() + ext;
+                var path = Path.Combine(folder, uniqueName);
+                model.Certificate.SaveAs(path);
+                savedFilePath = "/Content/certificates/" + uniqueName;
+            }
+
+            // Llamar al servicio para guardar en BD
+            var created = _userService.CreateProfessionalProfile(new ProfePerDtos
+            {
+                Nombre = model.Nombre,
+                Email = model.Email,
+                Password = model.Password,
+                Role = model.Role,
+                CertificatePath = savedFilePath
+            });
+
+            // ✅ Aquí devolvemos siempre algo en todos los caminos
+            if (created)
+            {
+                TempData["Success"] = "Perfil creado correctamente.";
+                return RedirectToAction("AdmiPrincipalUser");
+            }
+
+            // Si no se pudo crear
+            ModelState.AddModelError("", "Error al crear el perfil. Intenta nuevamente.");
             return View(model);
         }
     }
