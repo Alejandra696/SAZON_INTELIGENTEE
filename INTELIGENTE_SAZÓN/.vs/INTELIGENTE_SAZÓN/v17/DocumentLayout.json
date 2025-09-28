@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -55,6 +55,23 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdmiProfePerUser.cshtml",
+              "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\AdmiProfePerUser.cshtml",
+              "RelativeDocumentMoniker": "Views\\User\\AdmiProfePerUser.cshtml",
+              "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\AdmiProfePerUser.cshtml",
+              "RelativeToolTip": "Views\\User\\AdmiProfePerUser.cshtml",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAAAJgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-28T00:35:35.012Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -115,19 +132,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-09-27T00:11:50.622Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AdmiProfePerUser.cshtml",
-              "DocumentMoniker": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\AdmiProfePerUser.cshtml",
-              "RelativeDocumentMoniker": "Views\\User\\AdmiProfePerUser.cshtml",
-              "ToolTip": "C:\\Users\\jenim\\OneDrive\\Documentos\\INGIENERIA DEL SOFTWARE I\\P\u00C1GINA WEB\\SAZON_INTELIGENTEE\\INTELIGENTE_SAZ\u00D3N\\Views\\User\\AdmiProfePerUser.cshtml",
-              "RelativeToolTip": "Views\\User\\AdmiProfePerUser.cshtml",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAAAI0AAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-28T00:35:35.012Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
