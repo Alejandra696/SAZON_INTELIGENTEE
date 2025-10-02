@@ -1,0 +1,142 @@
+﻿@model INTELIGENTE_SAZÓN.Dtos.UserDtos
+@{
+    ViewBag.Title = "INICIO DE SESIÓN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*APARIENCIA DE TODO EL FONDO DE LA PANTALLA*@
+<style>
+    body {
+        background-color: #d6c8ff;
+        font-family: "Cooper Black", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        background-color: #cbb7ff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+        width: 450px;
+        margin: 60px auto;
+        text-align: center;
+    }
+
+    .login-header {
+        position: relative;
+        margin-bottom: 25px;
+        height: 80px;
+    }
+
+        .login-header img {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            right: 85%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .login-header h1 {
+            position: absolute;
+            left: 60%;
+            transform: translateX(-50%);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            font-weight: bold;
+            color: #1a093d;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+    .login-container label {
+        display: block;
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #2c1555;
+        text-align: center;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #aaa;
+        font-size: 16px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn {
+        background-color: #b6b6ff;
+        border: none;
+        padding: 12px;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #1a093d;
+        width: 80%;
+        margin-top: 10px;
+    }
+
+        .btn:hover {
+            background-color: #9f9ff7;
+        }
+
+    .links {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #3a2a6a;
+        text-align: center;
+    }
+
+        .links a {
+            color: #3a2a6a;
+            text-decoration: none;
+            font-weight: lighter;
+        }
+
+            .links a:hover {
+                text-decoration: underline;
+            }
+</style>
+
+<div class="login-container">
+    <div class="login-header">
+        <img src="~/Content/images/logo.jpg" alt="Logo" />
+        <h1>SAZÓN INTELIGENTE</h1>
+    </div>
+
+    @using (Html.BeginForm("Login", "User", FormMethod.Post))
+    {
+        <div>
+            @Html.LabelFor(m => m.FullName, "Usuario:")
+            @Html.TextBoxFor(m => m.FullName, new { @class = "input" })
+            @Html.ValidationMessageFor(m => m.FullName)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Password, "Contraseña:")
+            @Html.PasswordFor(m => m.Password, new { @class = "input" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+
+        <button type="submit" class="btn">INICIAR SESIÓN</button>
+    }
+
+    <p class="links">
+        <a href="#">¿HAS OLVIDADO TU CONTRASEÑA?</a><br />
+        <a href="@Url.Action("RegisterUser","User")">REGISTRARSE</a>
+    </p>
+</div>
+
+
+
+
