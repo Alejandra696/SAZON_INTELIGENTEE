@@ -40,7 +40,7 @@
         }
 
     .admin-subtitle {
-        font-size: 16px;
+        font-size: 17px;
         margin-bottom: 20px;
         color: #4a4a4a;
     }
@@ -72,16 +72,16 @@
     <p class="admin-subtitle">Selecciona la opción a la cuál deseas acceder:</p>
 
     <div class="admin-buttons">
-        <button onclick="location.href='@Url.Action("CreateProfiles", "User")'">
+        <button onclick="location.href='@Url.Action("AdmiProfePerUser", "ProfePer")'">
             CREACIÓN DE PERFILES PROFESIONALES
         </button>
-        <button onclick="location.href='@Url.Action("ActivateProfiles", "User")'">
+        <button onclick="location.href='@Url.Action("AdmiActiveUser", "ProfePer")'">
             ACTIVAR O DESACTIVAR PERFILES PROFESIONALES
         </button>
-        <button onclick="location.href='@Url.Action("DeleteProfiles", "User")'">
+        <button onclick="location.href='@Url.Action("DeleteProfiles", "ProfePer")'">
             ELIMINAR PERFILES PROFESIONALES
         </button>
-        <button onclick="location.href='@Url.Action("MonthlyReports", "User")'">
+        <button onclick="location.href='@Url.Action("AdmiReportProfePer", "ProfePer")'">
             VISUALIZAR LOS REPORTES MENSUALES
         </button>
     </div>

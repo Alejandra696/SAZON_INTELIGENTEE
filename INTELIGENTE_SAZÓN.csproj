@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,10 +46,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,17 +152,91 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\FoodEngiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfePerController.cs" />
+    <Compile Include="Controllers\RecipeChefController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Dtos\ClientDtos.cs" />
+    <Compile Include="Dtos\FoodEngiDtos.cs" />
     <Compile Include="Dtos\ProfePerDtos.cs" />
+    <Compile Include="Dtos\RecipeChefDtos.cs" />
+    <Compile Include="Dtos\ReportDtos.cs" />
     <Compile Include="Dtos\UserDtos.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ClientRepository.cs" />
+    <Compile Include="Repositories\FoodEngiRepository.cs" />
+    <Compile Include="Repositories\Models\CATEGORY_FOOD.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\FAVORITE_RECIPE.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\FOOD.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\INVENTORY.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\Model_Sazon_Inteligente.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_Sazon_Inteligente.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\Model_Sazon_Inteligente.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\Model_Sazon_Inteligente.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_Sazon_Inteligente.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\PROFESSIONAL_PROFILE.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\RECIPE.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\RECIPE_INGREDIENTS.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\REGISTER_FOOD.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\REPORT.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\ROLE.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\SPECIFICATION_FOOD.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\UNIT_MEASURE.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Models\USER.cs">
+      <DependentUpon>Model_Sazon_Inteligente.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ProfePerRepository.cs" />
+    <Compile Include="Repositories\RecipeChefRepository.cs" />
+    <Compile Include="Repositories\ReportRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\FoodEngiService.cs" />
+    <Compile Include="Services\ProfePerService.cs" />
+    <Compile Include="Services\RecipeChefService.cs" />
+    <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Utilies\PasswordUtility.cs" />
+    <Compile Include="Utilities\DBUtility.cs" />
+    <Compile Include="Utilities\ReportPdfGenerator.cs" />
+    <Compile Include="Utilities\PasswordUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -149,19 +255,45 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\cook.png" />
+    <Content Include="Content\Images\eat.png" />
+    <Content Include="Content\Images\food.png" />
     <Content Include="Content\Images\ImagenAdmi.jpg" />
     <Content Include="Content\Images\ImagenChefPrin.jpg" />
     <Content Include="Content\Images\ImagenIngePrin.jpg" />
     <Content Include="Content\Images\Logo.jpg" />
+    <Content Include="Content\Images\mousetongue.png" />
+    <Content Include="Content\Images\shelf.png" />
+    <Content Include="Content\Images\Smiling.png" />
+    <Content Include="Content\Images\Scared.png" />
+    <Content Include="Content\Images\writemouse.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Images\BackgroundReports.png" />
+    <Content Include="Repositories\Models\Model_Sazon_Inteligente.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_Sazon_Inteligente.edmx</DependentUpon>
+      <LastGenOutput>Model_Sazon_Inteligente.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repositories\Models\Model_Sazon_Inteligente.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_Sazon_Inteligente.edmx</DependentUpon>
+      <LastGenOutput>Model_Sazon_Inteligente.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Repositories\Models\Model_Sazon_Inteligente.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_Sazon_Inteligente.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Repositories\Models\Model_Sazon_Inteligente.edmx.diagram">
+      <DependentUpon>Model_Sazon_Inteligente.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -191,7 +323,17 @@
     <Content Include="Views\User\SucessUser.cshtml" />
     <Content Include="Views\User\LoginUser.cshtml" />
     <Content Include="Views\User\AdmiPrincipalUser.cshtml" />
-    <Content Include="Views\User\AdmiProfePerUser.cshtml" />
+    <Content Include="Views\ProfePer\AdmiProfePerUser.cshtml" />
+    <Content Include="Views\ProfePer\AdmiActiveUser.cshtml" />
+    <Content Include="Views\ProfePer\AdmiReportProfePer.cshtml" />
+    <Content Include="Views\User\EngineerPrincipalUser.cshtml" />
+    <Content Include="Views\FoodEngi\EngiRegisterFood.cshtml" />
+    <Content Include="Views\FoodEngi\EngiSpeciFood.cshtml" />
+    <Content Include="Views\User\ChefPrincipalUser.cshtml" />
+    <Content Include="Views\RecipeChef\ChefCreateRecipe.cshtml" />
+    <Content Include="Views\User\ClientPrincipalUser.cshtml" />
+    <Content Include="Views\Client\RegisterProduct.cshtml" />
+    <Content Include="Views\Client\ViewInventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -222,6 +364,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -256,7 +401,10 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

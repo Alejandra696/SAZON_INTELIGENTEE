@@ -1,4 +1,4 @@
-﻿@model INTELIGENTE_SAZÓN.Dtos.UserDtos
+﻿@model INTELIGENTE_SAZÓN.Dtos.LoginDtos
 @{
     ViewBag.Title = "INICIO DE SESIÓN";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -106,8 +106,9 @@
             .links a:hover {
                 text-decoration: underline;
             }
-</style>
 
+
+</style>
 <div class="login-container">
     <div class="login-header">
         <img src="~/Content/images/logo.jpg" alt="Logo" />
@@ -116,16 +117,18 @@
 
     @using (Html.BeginForm("Login", "User", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
+
         <div>
-            @Html.LabelFor(m => m.FullName, "Usuario:")
-            @Html.TextBoxFor(m => m.FullName, new { @class = "input" })
-            @Html.ValidationMessageFor(m => m.FullName)
+            @Html.LabelFor(m => m.email_User, "Correo electrónico:")
+            @Html.TextBoxFor(m => m.email_User, new { @class = "input" })
+            @Html.ValidationMessageFor(m => m.email_User, "", new {@class = "text-danger" })
         </div>
 
         <div>
-            @Html.LabelFor(m => m.Password, "Contraseña:")
-            @Html.PasswordFor(m => m.Password, new { @class = "input" })
-            @Html.ValidationMessageFor(m => m.Password)
+            @Html.LabelFor(m => m.passw_User, "Contraseña:")
+            @Html.PasswordFor(m => m.passw_User, new { @class = "input" })
+            @Html.ValidationMessageFor(m => m.passw_User, "", new {@class = "text-danger" })
         </div>
 
         <button type="submit" class="btn">INICIAR SESIÓN</button>
@@ -136,6 +139,7 @@
         <a href="@Url.Action("RegisterUser","User")">REGISTRARSE</a>
     </p>
 </div>
+
 
 
 

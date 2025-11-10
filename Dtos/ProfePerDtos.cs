@@ -6,34 +6,18 @@ using System.Web;
 
 namespace INTELIGENTE_SAZÓN.Dtos
 {
-    public class ProfePerDtos
+    public class ProfessionalProfileDtos
     {
-        [Required(ErrorMessage = "El nombre es obligatorio.")]
-        [Display(Name = "Nombre.")]
-        public string Nombre { get; set; }
-
-        [Required(ErrorMessage = "El correo es obligatorio.")]
-        [EmailAddress(ErrorMessage = "Correo inválido.")]
-        [Display(Name = "Correo electrónico.")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "La contraseña es obligatoria.")]
-        [DataType(DataType.Password)]
-        [MinLength(6, ErrorMessage = "La contraseña debe tener mínimo 6 caracteres.")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "Debes confirmar la contraseña.")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
-        [Display(Name = "Confirmar contraseña.")]
-        public string ConfirmPassword { get; set; }
-
-        [Required(ErrorMessage = "Selecciona un rol..")]
-        public string Role { get; set; }
-
-        [Display(Name = "Certificado.")]
-        public HttpPostedFileBase Certificate { get; set; }
-
-        public string CertificatePath { get; set; }
+        public int ID_Profile { get; set; }          // Autoincremental en la BD
+        public string name_User_Profile { get; set; }
+        public string email_User_Profile { get; set; }
+        public string passw_User_Profile { get; set; }
+        public string Confirm_Password_Profile { get; set; }
+        public string cert_Profile { get; set; }     // Ruta o nombre del PDF del certificado
+        public DateTime ? date_Regis_Profile { get; set; }  // Fecha de registro del perfil
+        public bool ? status_Profile { get; set; }     // Activo (1) o Inactivo (0)
+        public string time_labo { get; set; }        // Ejemplo: "30 días" (varchar(10))
+        public int  ? ID_Role { get; set; }
+        public DateTime? Last_Login_Profile { get; set; }
     }
 }

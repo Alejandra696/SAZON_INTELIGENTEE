@@ -1,0 +1,176 @@
+﻿@model INTELIGENTE_SAZÓN.Dtos.RegisterProductViewModel
+@{
+    ViewBag.Title = "Registro de Productos";
+}
+
+<style>
+    .main-container {
+        background-color: #EAD9FF;
+        padding: 30px;
+        border-radius: 20px;
+        width: 90%;
+        margin: auto;
+    }
+
+    .title {
+        font-family: 'Cooper Black';
+        font-size: 40px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .search-box {
+        background: #d9b6ff;
+        padding: 10px;
+        border-radius: 20px;
+        width: 70%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .food-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background: #d8b8ff;
+        margin-top: 12px;
+        border-radius: 15px;
+    }
+
+    .food-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 12px;
+        margin-right: 15px;
+        object-fit: cover;
+    }
+
+    .food-name {
+        font-size: 20px;
+        width: 150px;
+    }
+
+    .btn-save {
+        margin-top: 20px;
+        background: #b388ff;
+        padding: 10px 20px;
+        border-radius: 15px;
+        color: white;
+        border: none;
+        font-size: 20px;
+        width: 200px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #successMessage {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: green;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="main-container">
+
+    @if (ViewBag.Message != null)
+    {
+        <div id="successMessage">@ViewBag.Message</div>
+    }
+
+    <h1 class="title">REGISTRO DE PRODUCTOS</h1>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar alimentos..." style="width:80%; border-radius:10px; padding:8px;">
+        <button onclick="filterFoods()">🔍</button>
+    </div>
+
+    <div id="foodsContainer">
+        @foreach (var food in Model.Foods)
+        {
+            <div class="food-item" data-name="@food.name_Food.ToLower()">
+                <img class="food-img" src="@food.imag_Food" alt="Imagen">
+
+                <div class="food-name">@food.name_Food</div>
+
+                <input type="number" class="amountInput" placeholder="Cantidad" style="width:90px" />
+
+                <select class="unitSelect">
+                    <option value="">--Unidad--</option>
+                    @foreach (var u in Model.Units)
+                    {
+                        <option value="@u.Key">@u.Value</option>
+                    }
+                </select>
+
+                <select class="categorySelect">
+                    <option value="">--Categoría--</option>
+                    @foreach (var c in Model.Categories)
+                    {
+                        <option value="@c.Key">@c.Value</option>
+                    }
+                </select>
+
+                <input type="hidden" class="foodId" value="@food.ID_Food" />
+            </div>
+        }
+    </div>
+
+    <button class="btn-save" onclick="sendData()">AGREGAR</button>
+    <a href="@Url.Action("User", "ClientPrincipalUser")" class="btn">CANCELAR</a>
+</div>
+
+<script>
+
+function filterFoods() {
+    let text = document.getElementById("searchInput").value.toLowerCase();
+    let items = document.querySelectorAll(".food-item");
+
+    items.forEach(i => {
+        let name = i.getAttribute("data-name");
+        i.style.display = name.includes(text) ? "flex" : "none";
+    });
+}
+
+function sendData() {
+
+    let items = [];
+
+    document.querySelectorAll(".food-item").forEach(row => {
+
+        let amount = row.querySelector(".amountInput").value;
+        let unit = row.querySelector(".unitSelect").value;
+        let categ = row.querySelector(".categorySelect").value;
+        let idFood = row.querySelector(".foodId").value;
+
+        if (amount && unit && categ) {
+            items.push({
+                ID_Food: parseInt(idFood),
+                amount_Product: parseInt(amount),
+                ID_Unit_Measure: parseInt(unit),
+                ID_Categ_Food: parseInt(categ)
+            });
+        }
+    });
+
+    if (items.length === 0) {
+        alert("Debe completar al menos un producto.");
+        return;
+    }
+
+    $.ajax({
+        url: '@Url.Action("SaveProducts", "Client")',
+        method: "POST",
+        data: JSON.stringify({ items: items }),
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+            window.location.reload();
+        }
+    });
+}
+
+</script>

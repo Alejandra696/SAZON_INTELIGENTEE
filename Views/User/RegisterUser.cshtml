@@ -1,4 +1,4 @@
-﻿        @model INTELIGENTE_SAZÓN.Dtos.UserDtos
+﻿@model INTELIGENTE_SAZÓN.Dtos.UserDtos
 @{
     ViewBag.Title = "REGISTRO DE USUARIOS";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -93,7 +93,6 @@
         }
 </style>
 
-
 @*LLAMADO CLASES*@
 <div class="register-container">
     <img src="~/Content/Images/Logo.jpg" alt="Logo de la Página Web" class="logo" />
@@ -101,32 +100,51 @@
     <div class="form-section">
         <h1>SAZÓN INTELIGENTE</h1>
 
+        @* ✅ BLOQUE DE MENSAJES *@
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" style="margin-top:10px; text-align:center;">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div class="alert alert-danger" style="margin-top:10px; text-align:center;">
+                    @error.ErrorMessage
+                </div>
+            }
+        }
+
         @using (Html.BeginForm("Register", "User", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
             <div class="form-row">
                 <label>Nombre: </label>
-                @Html.TextBoxFor(m => m.FullName, new { @class = "form-input", placeholder = "Nombre completo" })
-                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.name_User, new { @class = "form-input", placeholder = "Nombre completo" })
+                @Html.ValidationMessageFor(m => m.name_User, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-row">
                 <label>Correo electrónico: </label>
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-input", placeholder = "Correo@ejemplo.com", type = "email" })
-                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.email_User, new { @class = "form-input", placeholder = "Correo@ejemplo.com", type = "email" })
+                @Html.ValidationMessageFor(m => m.email_User, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-row">
                 <label>Teléfono: </label>
-                @Html.TextBoxFor(m => m.Phone, new { @class = "form-input", placeholder = "(300) 555-0000" })
-                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.phone_User, new { @class = "form-input", placeholder = "(300) 555-0000" })
+                @Html.ValidationMessageFor(m => m.phone_User, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-row">
                 <label>Contraseña: </label>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-input", placeholder = "Contraseña" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                @Html.PasswordFor(m => m.passw_User, new { @class = "form-input", placeholder = "Contraseña" })
+                @Html.ValidationMessageFor(m => m.passw_User, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-row">

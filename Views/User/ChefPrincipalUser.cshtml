@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "OPCIONES DEL CHEF";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #e6d6fa;
+        font-family: "Cooper Black", sans-serif;
+    }
+
+    .chef-container {
+        background-color: #d9c9ff;
+        width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .chef-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+        .chef-header img {
+            width: 93px;
+            margin-right: 20px;
+        }
+
+        .chef-header h1 {
+            font-size: 38px;
+            font-weight: bold;
+            color: #3a2a6a;
+            margin: 0;
+        }
+
+    .chef-subtitle {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #4a4a4a;
+    }
+
+    .chef-buttons button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+        background-color: #a6a6ff;
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 16px;
+        color: #222;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+        .chef-buttons button:hover {
+            background-color: #8d8df5;
+        }
+</style>
+
+<div class="chef-container">
+    <div class="chef-header">
+        <img src="~/Content/images/ImagenChefPrin.jpg" alt="Icono del Chef" />
+        <h1>¡HOLAA CHEFSITOO!</h1>
+    </div>
+
+    <p class="chef-subtitle">Selecciona la opción a la cuál deseas acceder:</p>
+
+    <div class="chef-buttons">
+        <button onclick="location.href='@Url.Action("ChefCreateRecipe", "RecipeChef")'">
+            CREAR RECETAS PASO A PASO
+        </button>
+
+        <button onclick="location.href='@Url.Action("ActualizarRecetas", "User")'">
+            ACTUALIZAR LAS RECETAS
+        </button>
+
+        <button onclick="location.href='@Url.Action("EliminarRecetas", "User")'">
+            ELIMINAR LAS RECETAS
+        </button>
+
+        <button onclick="location.href='@Url.Action("Index", "Home")'">
+            INGRESAR COMO USUARIO
+        </button>
+    </div>
+</div>

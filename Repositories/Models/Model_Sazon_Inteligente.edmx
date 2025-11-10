@@ -1,0 +1,960 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Sazon_inteligenteDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CATEGORY_FOOD">
+          <Key>
+            <PropertyRef Name="ID_Categ_Food" />
+          </Key>
+          <Property Name="ID_Categ_Food" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_Categ_Food" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="FAVORITE_RECIPE">
+          <Key>
+            <PropertyRef Name="ID_Recipe_Fav" />
+          </Key>
+          <Property Name="ID_Recipe_Fav" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_User" Type="int" />
+          <Property Name="ID_Recipe" Type="int" />
+        </EntityType>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="ID_Food" />
+          </Key>
+          <Property Name="ID_Food" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_Food" Type="varchar" MaxLength="30" />
+          <Property Name="imag_Food" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="INVENTORY">
+          <Key>
+            <PropertyRef Name="ID_Invent" />
+          </Key>
+          <Property Name="ID_Invent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_Reg_Invent" Type="date" />
+          <Property Name="date_Upda_Invent" Type="date" />
+          <Property Name="delete_Food_Invent" Type="bit" />
+          <Property Name="ID_User" Type="int" />
+        </EntityType>
+        <EntityType Name="PROFESSIONAL PROFILE">
+          <Key>
+            <PropertyRef Name="ID_Profile" />
+          </Key>
+          <Property Name="ID_Profile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_User_Profile" Type="varchar" MaxLength="30" />
+          <Property Name="passw_User_Profile" Type="varchar(max)" />
+          <Property Name="email_User_Profile" Type="varchar" MaxLength="100" />
+          <Property Name="cert_Profile" Type="varchar(max)" />
+          <Property Name="date_Regis_Profile" Type="date" />
+          <Property Name="status_Profile" Type="bit" />
+          <Property Name="time_labo" Type="varchar" MaxLength="10" />
+          <Property Name="ID_Role" Type="int" />
+          <Property Name="Last_Login_Profile" Type="date" />
+        </EntityType>
+        <EntityType Name="RECIPE">
+          <Key>
+            <PropertyRef Name="ID_Recipe" />
+          </Key>
+          <Property Name="ID_Recipe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_Recipe" Type="varchar" MaxLength="100" />
+          <Property Name="imag_Recipe" Type="varchar(max)" />
+          <Property Name="instrucc_Recipe" Type="varchar(max)" />
+          <Property Name="delete_Recipe" Type="bit" />
+          <Property Name="ID_Ingred" Type="int" />
+        </EntityType>
+        <EntityType Name="RECIPE_INGREDIENTS">
+          <Key>
+            <PropertyRef Name="ID_Ingred" />
+          </Key>
+          <Property Name="ID_Ingred" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="amount_Ingred" Type="int" />
+          <Property Name="ID_Unit_Measure" Type="int" />
+          <Property Name="ID_Recipe" Type="int" />
+          <Property Name="ID_Food" Type="int" />
+        </EntityType>
+        <EntityType Name="REGISTER_FOOD">
+          <Key>
+            <PropertyRef Name="ID_Regis_Product" />
+          </Key>
+          <Property Name="ID_Regis_Product" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="amount_Product" Type="int" />
+          <Property Name="date_Regis_Food" Type="date" />
+          <Property Name="date_Upda_Food" Type="date" />
+          <Property Name="delete_Food" Type="bit" />
+          <Property Name="ID_Invent" Type="int" />
+          <Property Name="ID_Food" Type="int" />
+          <Property Name="ID_Unit_Measure" Type="int" />
+          <Property Name="ID_User" Type="int" />
+          <Property Name="ID_Categ_Food" Type="int" />
+        </EntityType>
+        <EntityType Name="REPORT">
+          <Key>
+            <PropertyRef Name="ID_Report" />
+          </Key>
+          <Property Name="ID_Report" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_Gener_Report" Type="date" />
+          <Property Name="user_Regis" Type="int" />
+          <Property Name="user_Retir" Type="int" />
+          <Property Name="user_New" Type="int" />
+          <Property Name="user_Current" Type="int" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_Role" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SPECIFICATION_FOOD">
+          <Key>
+            <PropertyRef Name="ID_Specif_Food" />
+          </Key>
+          <Property Name="ID_Specif_Food" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="time_Opet_Days" Type="varchar" MaxLength="10" />
+          <Property Name="delete_Food" Type="bit" />
+          <Property Name="sugges_Conser_Food" Type="varchar(max)" />
+          <Property Name="ID_Food" Type="int" />
+        </EntityType>
+        <EntityType Name="UNIT_MEASURE">
+          <Key>
+            <PropertyRef Name="ID_Unit_Measure" />
+          </Key>
+          <Property Name="ID_Unit_Measure" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_Unit_Measure" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_User" Type="varchar" MaxLength="30" />
+          <Property Name="email_User" Type="varchar" MaxLength="100" />
+          <Property Name="phone_User" Type="varchar" MaxLength="13" />
+          <Property Name="passw_User" Type="varchar(max)" />
+          <Property Name="date_Regis_User" Type="date" />
+          <Property Name="ID_Role" Type="int" />
+          <Property Name="ID_Invent" Type="int" />
+          <Property Name="last_Login_User" Type="date" />
+        </EntityType>
+        <Association Name="FK_FAVORITE_RECIPE_RECIPE">
+          <End Role="RECIPE" Type="Self.RECIPE" Multiplicity="0..1" />
+          <End Role="FAVORITE_RECIPE" Type="Self.FAVORITE_RECIPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECIPE">
+              <PropertyRef Name="ID_Recipe" />
+            </Principal>
+            <Dependent Role="FAVORITE_RECIPE">
+              <PropertyRef Name="ID_Recipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FAVORITE_RECIPE_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="FAVORITE_RECIPE" Type="Self.FAVORITE_RECIPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="FAVORITE_RECIPE">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROFESSIONAL PROFILE_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="PROFESSIONAL PROFILE" Type="Self.PROFESSIONAL PROFILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="PROFESSIONAL PROFILE">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIPE_INGREDIENTS_FOOD1">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="0..1" />
+          <End Role="RECIPE_INGREDIENTS" Type="Self.RECIPE_INGREDIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Principal>
+            <Dependent Role="RECIPE_INGREDIENTS">
+              <PropertyRef Name="ID_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIPE_INGREDIENTS_RECIPE">
+          <End Role="RECIPE" Type="Self.RECIPE" Multiplicity="0..1" />
+          <End Role="RECIPE_INGREDIENTS" Type="Self.RECIPE_INGREDIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECIPE">
+              <PropertyRef Name="ID_Recipe" />
+            </Principal>
+            <Dependent Role="RECIPE_INGREDIENTS">
+              <PropertyRef Name="ID_Recipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIPE_INGREDIENTS_UNIT_MEASURE">
+          <End Role="UNIT_MEASURE" Type="Self.UNIT_MEASURE" Multiplicity="0..1" />
+          <End Role="RECIPE_INGREDIENTS" Type="Self.RECIPE_INGREDIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIT_MEASURE">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Principal>
+            <Dependent Role="RECIPE_INGREDIENTS">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_CATEGORY_FOOD">
+          <End Role="CATEGORY_FOOD" Type="Self.CATEGORY_FOOD" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY_FOOD">
+              <PropertyRef Name="ID_Categ_Food" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Categ_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_FOOD">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_INVENTORY">
+          <End Role="INVENTORY" Type="Self.INVENTORY" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INVENTORY">
+              <PropertyRef Name="ID_Invent" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Invent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_UNIT_MEASURE">
+          <End Role="UNIT_MEASURE" Type="Self.UNIT_MEASURE" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIT_MEASURE">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPECIFICATION_FOOD_FOOD">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="0..1" />
+          <End Role="SPECIFICATION_FOOD" Type="Self.SPECIFICATION_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Principal>
+            <Dependent Role="SPECIFICATION_FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_INVENTORY">
+          <End Role="INVENTORY" Type="Self.INVENTORY" Multiplicity="0..1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INVENTORY">
+              <PropertyRef Name="ID_Invent" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="ID_Invent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sazon_inteligenteDBModelStoreContainer">
+          <EntitySet Name="CATEGORY_FOOD" EntityType="Self.CATEGORY_FOOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FAVORITE_RECIPE" EntityType="Self.FAVORITE_RECIPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOOD" EntityType="Self.FOOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INVENTORY" EntityType="Self.INVENTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROFESSIONAL PROFILE" EntityType="Self.PROFESSIONAL PROFILE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RECIPE" EntityType="Self.RECIPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RECIPE_INGREDIENTS" EntityType="Self.RECIPE_INGREDIENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REGISTER_FOOD" EntityType="Self.REGISTER_FOOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REPORT" EntityType="Self.REPORT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SPECIFICATION_FOOD" EntityType="Self.SPECIFICATION_FOOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UNIT_MEASURE" EntityType="Self.UNIT_MEASURE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FAVORITE_RECIPE_RECIPE" Association="Self.FK_FAVORITE_RECIPE_RECIPE">
+            <End Role="RECIPE" EntitySet="RECIPE" />
+            <End Role="FAVORITE_RECIPE" EntitySet="FAVORITE_RECIPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FAVORITE_RECIPE_USER" Association="Self.FK_FAVORITE_RECIPE_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="FAVORITE_RECIPE" EntitySet="FAVORITE_RECIPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROFESSIONAL PROFILE_USER" Association="Self.FK_PROFESSIONAL PROFILE_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="PROFESSIONAL PROFILE" EntitySet="PROFESSIONAL PROFILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIPE_INGREDIENTS_FOOD1" Association="Self.FK_RECIPE_INGREDIENTS_FOOD1">
+            <End Role="FOOD" EntitySet="FOOD" />
+            <End Role="RECIPE_INGREDIENTS" EntitySet="RECIPE_INGREDIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIPE_INGREDIENTS_RECIPE" Association="Self.FK_RECIPE_INGREDIENTS_RECIPE">
+            <End Role="RECIPE" EntitySet="RECIPE" />
+            <End Role="RECIPE_INGREDIENTS" EntitySet="RECIPE_INGREDIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIPE_INGREDIENTS_UNIT_MEASURE" Association="Self.FK_RECIPE_INGREDIENTS_UNIT_MEASURE">
+            <End Role="UNIT_MEASURE" EntitySet="UNIT_MEASURE" />
+            <End Role="RECIPE_INGREDIENTS" EntitySet="RECIPE_INGREDIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_CATEGORY_FOOD" Association="Self.FK_REGISTER_FOOD_CATEGORY_FOOD">
+            <End Role="CATEGORY_FOOD" EntitySet="CATEGORY_FOOD" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_FOOD" Association="Self.FK_REGISTER_FOOD_FOOD">
+            <End Role="FOOD" EntitySet="FOOD" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_INVENTORY" Association="Self.FK_REGISTER_FOOD_INVENTORY">
+            <End Role="INVENTORY" EntitySet="INVENTORY" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_UNIT_MEASURE" Association="Self.FK_REGISTER_FOOD_UNIT_MEASURE">
+            <End Role="UNIT_MEASURE" EntitySet="UNIT_MEASURE" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_USER" Association="Self.FK_REGISTER_FOOD_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPECIFICATION_FOOD_FOOD" Association="Self.FK_SPECIFICATION_FOOD_FOOD">
+            <End Role="FOOD" EntitySet="FOOD" />
+            <End Role="SPECIFICATION_FOOD" EntitySet="SPECIFICATION_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_INVENTORY" Association="Self.FK_USER_INVENTORY">
+            <End Role="INVENTORY" EntitySet="INVENTORY" />
+            <End Role="USER" EntitySet="USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="USER" EntitySet="USER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Sazon_inteligenteDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CATEGORY_FOOD">
+          <Key>
+            <PropertyRef Name="ID_Categ_Food" />
+          </Key>
+          <Property Name="ID_Categ_Food" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_Categ_Food" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REGISTER_FOOD" Relationship="Self.FK_REGISTER_FOOD_CATEGORY_FOOD" FromRole="CATEGORY_FOOD" ToRole="REGISTER_FOOD" />
+        </EntityType>
+        <EntityType Name="FAVORITE_RECIPE">
+          <Key>
+            <PropertyRef Name="ID_Recipe_Fav" />
+          </Key>
+          <Property Name="ID_Recipe_Fav" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_User" Type="Int32" />
+          <Property Name="ID_Recipe" Type="Int32" />
+          <NavigationProperty Name="RECIPE" Relationship="Self.FK_FAVORITE_RECIPE_RECIPE" FromRole="FAVORITE_RECIPE" ToRole="RECIPE" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_FAVORITE_RECIPE_USER" FromRole="FAVORITE_RECIPE" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="ID_Food" />
+          </Key>
+          <Property Name="ID_Food" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_Food" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="imag_Food" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RECIPE_INGREDIENTS" Relationship="Self.FK_RECIPE_INGREDIENTS_FOOD1" FromRole="FOOD" ToRole="RECIPE_INGREDIENTS" />
+          <NavigationProperty Name="REGISTER_FOOD" Relationship="Self.FK_REGISTER_FOOD_FOOD" FromRole="FOOD" ToRole="REGISTER_FOOD" />
+          <NavigationProperty Name="SPECIFICATION_FOOD" Relationship="Self.FK_SPECIFICATION_FOOD_FOOD" FromRole="FOOD" ToRole="SPECIFICATION_FOOD" />
+        </EntityType>
+        <EntityType Name="INVENTORY">
+          <Key>
+            <PropertyRef Name="ID_Invent" />
+          </Key>
+          <Property Name="ID_Invent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_Reg_Invent" Type="DateTime" Precision="0" />
+          <Property Name="date_Upda_Invent" Type="DateTime" Precision="0" />
+          <Property Name="delete_Food_Invent" Type="Boolean" />
+          <Property Name="ID_User" Type="Int32" />
+          <NavigationProperty Name="REGISTER_FOOD" Relationship="Self.FK_REGISTER_FOOD_INVENTORY" FromRole="INVENTORY" ToRole="REGISTER_FOOD" />
+          <NavigationProperty Name="USERs" Relationship="Self.FK_USER_INVENTORY" FromRole="INVENTORY" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="PROFESSIONAL_PROFILE">
+          <Key>
+            <PropertyRef Name="ID_Profile" />
+          </Key>
+          <Property Name="ID_Profile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_User_Profile" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="passw_User_Profile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="email_User_Profile" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cert_Profile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="date_Regis_Profile" Type="DateTime" Precision="0" />
+          <Property Name="status_Profile" Type="Boolean" />
+          <Property Name="time_labo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Role" Type="Int32" />
+          <Property Name="Last_Login_Profile" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_PROFESSIONAL_PROFILE_USER" FromRole="PROFESSIONAL_PROFILE" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="RECIPE">
+          <Key>
+            <PropertyRef Name="ID_Recipe" />
+          </Key>
+          <Property Name="ID_Recipe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_Recipe" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imag_Recipe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="instrucc_Recipe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="delete_Recipe" Type="Boolean" />
+          <Property Name="ID_Ingred" Type="Int32" />
+          <NavigationProperty Name="FAVORITE_RECIPE" Relationship="Self.FK_FAVORITE_RECIPE_RECIPE" FromRole="RECIPE" ToRole="FAVORITE_RECIPE" />
+          <NavigationProperty Name="RECIPE_INGREDIENTS" Relationship="Self.FK_RECIPE_INGREDIENTS_RECIPE" FromRole="RECIPE" ToRole="RECIPE_INGREDIENTS" />
+        </EntityType>
+        <EntityType Name="RECIPE_INGREDIENTS">
+          <Key>
+            <PropertyRef Name="ID_Ingred" />
+          </Key>
+          <Property Name="ID_Ingred" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="amount_Ingred" Type="Int32" />
+          <Property Name="ID_Unit_Measure" Type="Int32" />
+          <Property Name="ID_Recipe" Type="Int32" />
+          <Property Name="ID_Food" Type="Int32" />
+          <NavigationProperty Name="FOOD" Relationship="Self.FK_RECIPE_INGREDIENTS_FOOD1" FromRole="RECIPE_INGREDIENTS" ToRole="FOOD" />
+          <NavigationProperty Name="RECIPE" Relationship="Self.FK_RECIPE_INGREDIENTS_RECIPE" FromRole="RECIPE_INGREDIENTS" ToRole="RECIPE" />
+          <NavigationProperty Name="UNIT_MEASURE" Relationship="Self.FK_RECIPE_INGREDIENTS_UNIT_MEASURE" FromRole="RECIPE_INGREDIENTS" ToRole="UNIT_MEASURE" />
+        </EntityType>
+        <EntityType Name="REGISTER_FOOD">
+          <Key>
+            <PropertyRef Name="ID_Regis_Product" />
+          </Key>
+          <Property Name="ID_Regis_Product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="amount_Product" Type="Int32" />
+          <Property Name="date_Regis_Food" Type="DateTime" Precision="0" />
+          <Property Name="date_Upda_Food" Type="DateTime" Precision="0" />
+          <Property Name="delete_Food" Type="Boolean" />
+          <Property Name="ID_Invent" Type="Int32" />
+          <Property Name="ID_Food" Type="Int32" />
+          <Property Name="ID_Unit_Measure" Type="Int32" />
+          <Property Name="ID_User" Type="Int32" />
+          <Property Name="ID_Categ_Food" Type="Int32" />
+          <NavigationProperty Name="CATEGORY_FOOD" Relationship="Self.FK_REGISTER_FOOD_CATEGORY_FOOD" FromRole="REGISTER_FOOD" ToRole="CATEGORY_FOOD" />
+          <NavigationProperty Name="FOOD" Relationship="Self.FK_REGISTER_FOOD_FOOD" FromRole="REGISTER_FOOD" ToRole="FOOD" />
+          <NavigationProperty Name="INVENTORY" Relationship="Self.FK_REGISTER_FOOD_INVENTORY" FromRole="REGISTER_FOOD" ToRole="INVENTORY" />
+          <NavigationProperty Name="UNIT_MEASURE" Relationship="Self.FK_REGISTER_FOOD_UNIT_MEASURE" FromRole="REGISTER_FOOD" ToRole="UNIT_MEASURE" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_REGISTER_FOOD_USER" FromRole="REGISTER_FOOD" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="REPORT">
+          <Key>
+            <PropertyRef Name="ID_Report" />
+          </Key>
+          <Property Name="ID_Report" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_Gener_Report" Type="DateTime" Precision="0" />
+          <Property Name="user_Regis" Type="Int32" />
+          <Property Name="user_Retir" Type="Int32" />
+          <Property Name="user_New" Type="Int32" />
+          <Property Name="user_Current" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USERs" Relationship="Self.FK_USER_ROLE" FromRole="ROLE" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="SPECIFICATION_FOOD">
+          <Key>
+            <PropertyRef Name="ID_Specif_Food" />
+          </Key>
+          <Property Name="ID_Specif_Food" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="time_Opet_Days" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="delete_Food" Type="Boolean" />
+          <Property Name="sugges_Conser_Food" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Food" Type="Int32" />
+          <NavigationProperty Name="FOOD" Relationship="Self.FK_SPECIFICATION_FOOD_FOOD" FromRole="SPECIFICATION_FOOD" ToRole="FOOD" />
+        </EntityType>
+        <EntityType Name="UNIT_MEASURE">
+          <Key>
+            <PropertyRef Name="ID_Unit_Measure" />
+          </Key>
+          <Property Name="ID_Unit_Measure" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_Unit_Measure" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RECIPE_INGREDIENTS" Relationship="Self.FK_RECIPE_INGREDIENTS_UNIT_MEASURE" FromRole="UNIT_MEASURE" ToRole="RECIPE_INGREDIENTS" />
+          <NavigationProperty Name="REGISTER_FOOD" Relationship="Self.FK_REGISTER_FOOD_UNIT_MEASURE" FromRole="UNIT_MEASURE" ToRole="REGISTER_FOOD" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_User" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="email_User" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="phone_User" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="passw_User" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="date_Regis_User" Type="DateTime" Precision="0" />
+          <Property Name="ID_Role" Type="Int32" />
+          <Property Name="ID_Invent" Type="Int32" />
+          <Property Name="last_Login_User" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="FAVORITE_RECIPE" Relationship="Self.FK_FAVORITE_RECIPE_USER" FromRole="USER" ToRole="FAVORITE_RECIPE" />
+          <NavigationProperty Name="INVENTORY" Relationship="Self.FK_USER_INVENTORY" FromRole="USER" ToRole="INVENTORY" />
+          <NavigationProperty Name="PROFESSIONAL_PROFILE" Relationship="Self.FK_PROFESSIONAL_PROFILE_USER" FromRole="USER" ToRole="PROFESSIONAL_PROFILE" />
+          <NavigationProperty Name="REGISTER_FOOD" Relationship="Self.FK_REGISTER_FOOD_USER" FromRole="USER" ToRole="REGISTER_FOOD" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK_USER_ROLE" FromRole="USER" ToRole="ROLE" />
+        </EntityType>
+        <Association Name="FK_REGISTER_FOOD_CATEGORY_FOOD">
+          <End Role="CATEGORY_FOOD" Type="Self.CATEGORY_FOOD" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY_FOOD">
+              <PropertyRef Name="ID_Categ_Food" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Categ_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FAVORITE_RECIPE_RECIPE">
+          <End Role="RECIPE" Type="Self.RECIPE" Multiplicity="0..1" />
+          <End Role="FAVORITE_RECIPE" Type="Self.FAVORITE_RECIPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECIPE">
+              <PropertyRef Name="ID_Recipe" />
+            </Principal>
+            <Dependent Role="FAVORITE_RECIPE">
+              <PropertyRef Name="ID_Recipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FAVORITE_RECIPE_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="FAVORITE_RECIPE" Type="Self.FAVORITE_RECIPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="FAVORITE_RECIPE">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIPE_INGREDIENTS_FOOD1">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="0..1" />
+          <End Role="RECIPE_INGREDIENTS" Type="Self.RECIPE_INGREDIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Principal>
+            <Dependent Role="RECIPE_INGREDIENTS">
+              <PropertyRef Name="ID_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_FOOD">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPECIFICATION_FOOD_FOOD">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="0..1" />
+          <End Role="SPECIFICATION_FOOD" Type="Self.SPECIFICATION_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Principal>
+            <Dependent Role="SPECIFICATION_FOOD">
+              <PropertyRef Name="ID_Food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_INVENTORY">
+          <End Role="INVENTORY" Type="Self.INVENTORY" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INVENTORY">
+              <PropertyRef Name="ID_Invent" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Invent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_INVENTORY">
+          <End Role="INVENTORY" Type="Self.INVENTORY" Multiplicity="0..1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INVENTORY">
+              <PropertyRef Name="ID_Invent" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="ID_Invent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROFESSIONAL_PROFILE_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="PROFESSIONAL_PROFILE" Type="Self.PROFESSIONAL_PROFILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="PROFESSIONAL_PROFILE">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIPE_INGREDIENTS_RECIPE">
+          <End Role="RECIPE" Type="Self.RECIPE" Multiplicity="0..1" />
+          <End Role="RECIPE_INGREDIENTS" Type="Self.RECIPE_INGREDIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECIPE">
+              <PropertyRef Name="ID_Recipe" />
+            </Principal>
+            <Dependent Role="RECIPE_INGREDIENTS">
+              <PropertyRef Name="ID_Recipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECIPE_INGREDIENTS_UNIT_MEASURE">
+          <End Role="UNIT_MEASURE" Type="Self.UNIT_MEASURE" Multiplicity="0..1" />
+          <End Role="RECIPE_INGREDIENTS" Type="Self.RECIPE_INGREDIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIT_MEASURE">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Principal>
+            <Dependent Role="RECIPE_INGREDIENTS">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_UNIT_MEASURE">
+          <End Role="UNIT_MEASURE" Type="Self.UNIT_MEASURE" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIT_MEASURE">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_Unit_Measure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTER_FOOD_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="REGISTER_FOOD" Type="Self.REGISTER_FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="REGISTER_FOOD">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sazon_inteligenteDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CATEGORY_FOOD" EntityType="Self.CATEGORY_FOOD" />
+          <EntitySet Name="FAVORITE_RECIPE" EntityType="Self.FAVORITE_RECIPE" />
+          <EntitySet Name="FOODs" EntityType="Self.FOOD" />
+          <EntitySet Name="INVENTORies" EntityType="Self.INVENTORY" />
+          <EntitySet Name="PROFESSIONAL_PROFILEs" EntityType="Self.PROFESSIONAL_PROFILE" />
+          <EntitySet Name="RECIPEs" EntityType="Self.RECIPE" />
+          <EntitySet Name="RECIPE_INGREDIENTS" EntityType="Self.RECIPE_INGREDIENTS" />
+          <EntitySet Name="REGISTER_FOOD" EntityType="Self.REGISTER_FOOD" />
+          <EntitySet Name="REPORTs" EntityType="Self.REPORT" />
+          <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
+          <EntitySet Name="SPECIFICATION_FOOD" EntityType="Self.SPECIFICATION_FOOD" />
+          <EntitySet Name="UNIT_MEASURE" EntityType="Self.UNIT_MEASURE" />
+          <EntitySet Name="USERs" EntityType="Self.USER" />
+          <AssociationSet Name="FK_REGISTER_FOOD_CATEGORY_FOOD" Association="Self.FK_REGISTER_FOOD_CATEGORY_FOOD">
+            <End Role="CATEGORY_FOOD" EntitySet="CATEGORY_FOOD" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FAVORITE_RECIPE_RECIPE" Association="Self.FK_FAVORITE_RECIPE_RECIPE">
+            <End Role="RECIPE" EntitySet="RECIPEs" />
+            <End Role="FAVORITE_RECIPE" EntitySet="FAVORITE_RECIPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FAVORITE_RECIPE_USER" Association="Self.FK_FAVORITE_RECIPE_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="FAVORITE_RECIPE" EntitySet="FAVORITE_RECIPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIPE_INGREDIENTS_FOOD1" Association="Self.FK_RECIPE_INGREDIENTS_FOOD1">
+            <End Role="FOOD" EntitySet="FOODs" />
+            <End Role="RECIPE_INGREDIENTS" EntitySet="RECIPE_INGREDIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_FOOD" Association="Self.FK_REGISTER_FOOD_FOOD">
+            <End Role="FOOD" EntitySet="FOODs" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPECIFICATION_FOOD_FOOD" Association="Self.FK_SPECIFICATION_FOOD_FOOD">
+            <End Role="FOOD" EntitySet="FOODs" />
+            <End Role="SPECIFICATION_FOOD" EntitySet="SPECIFICATION_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_INVENTORY" Association="Self.FK_REGISTER_FOOD_INVENTORY">
+            <End Role="INVENTORY" EntitySet="INVENTORies" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_INVENTORY" Association="Self.FK_USER_INVENTORY">
+            <End Role="INVENTORY" EntitySet="INVENTORies" />
+            <End Role="USER" EntitySet="USERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROFESSIONAL_PROFILE_USER" Association="Self.FK_PROFESSIONAL_PROFILE_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="PROFESSIONAL_PROFILE" EntitySet="PROFESSIONAL_PROFILEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIPE_INGREDIENTS_RECIPE" Association="Self.FK_RECIPE_INGREDIENTS_RECIPE">
+            <End Role="RECIPE" EntitySet="RECIPEs" />
+            <End Role="RECIPE_INGREDIENTS" EntitySet="RECIPE_INGREDIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECIPE_INGREDIENTS_UNIT_MEASURE" Association="Self.FK_RECIPE_INGREDIENTS_UNIT_MEASURE">
+            <End Role="UNIT_MEASURE" EntitySet="UNIT_MEASURE" />
+            <End Role="RECIPE_INGREDIENTS" EntitySet="RECIPE_INGREDIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_UNIT_MEASURE" Association="Self.FK_REGISTER_FOOD_UNIT_MEASURE">
+            <End Role="UNIT_MEASURE" EntitySet="UNIT_MEASURE" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTER_FOOD_USER" Association="Self.FK_REGISTER_FOOD_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="REGISTER_FOOD" EntitySet="REGISTER_FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+            <End Role="ROLE" EntitySet="ROLEs" />
+            <End Role="USER" EntitySet="USERs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Sazon_inteligenteDBModelStoreContainer" CdmEntityContainer="Sazon_inteligenteDBEntities1">
+          <EntitySetMapping Name="CATEGORY_FOOD">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.CATEGORY_FOOD">
+              <MappingFragment StoreEntitySet="CATEGORY_FOOD">
+                <ScalarProperty Name="ID_Categ_Food" ColumnName="ID_Categ_Food" />
+                <ScalarProperty Name="name_Categ_Food" ColumnName="name_Categ_Food" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAVORITE_RECIPE">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.FAVORITE_RECIPE">
+              <MappingFragment StoreEntitySet="FAVORITE_RECIPE">
+                <ScalarProperty Name="ID_Recipe_Fav" ColumnName="ID_Recipe_Fav" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="ID_Recipe" ColumnName="ID_Recipe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOODs">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.FOOD">
+              <MappingFragment StoreEntitySet="FOOD">
+                <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
+                <ScalarProperty Name="name_Food" ColumnName="name_Food" />
+                <ScalarProperty Name="imag_Food" ColumnName="imag_Food" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INVENTORies">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.INVENTORY">
+              <MappingFragment StoreEntitySet="INVENTORY">
+                <ScalarProperty Name="ID_Invent" ColumnName="ID_Invent" />
+                <ScalarProperty Name="date_Reg_Invent" ColumnName="date_Reg_Invent" />
+                <ScalarProperty Name="date_Upda_Invent" ColumnName="date_Upda_Invent" />
+                <ScalarProperty Name="delete_Food_Invent" ColumnName="delete_Food_Invent" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROFESSIONAL_PROFILEs">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.PROFESSIONAL_PROFILE">
+              <MappingFragment StoreEntitySet="PROFESSIONAL PROFILE">
+                <ScalarProperty Name="ID_Profile" ColumnName="ID_Profile" />
+                <ScalarProperty Name="name_User_Profile" ColumnName="name_User_Profile" />
+                <ScalarProperty Name="passw_User_Profile" ColumnName="passw_User_Profile" />
+                <ScalarProperty Name="email_User_Profile" ColumnName="email_User_Profile" />
+                <ScalarProperty Name="cert_Profile" ColumnName="cert_Profile" />
+                <ScalarProperty Name="date_Regis_Profile" ColumnName="date_Regis_Profile" />
+                <ScalarProperty Name="status_Profile" ColumnName="status_Profile" />
+                <ScalarProperty Name="time_labo" ColumnName="time_labo" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="Last_Login_Profile" ColumnName="Last_Login_Profile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECIPEs">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.RECIPE">
+              <MappingFragment StoreEntitySet="RECIPE">
+                <ScalarProperty Name="ID_Recipe" ColumnName="ID_Recipe" />
+                <ScalarProperty Name="name_Recipe" ColumnName="name_Recipe" />
+                <ScalarProperty Name="imag_Recipe" ColumnName="imag_Recipe" />
+                <ScalarProperty Name="instrucc_Recipe" ColumnName="instrucc_Recipe" />
+                <ScalarProperty Name="delete_Recipe" ColumnName="delete_Recipe" />
+                <ScalarProperty Name="ID_Ingred" ColumnName="ID_Ingred" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECIPE_INGREDIENTS">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.RECIPE_INGREDIENTS">
+              <MappingFragment StoreEntitySet="RECIPE_INGREDIENTS">
+                <ScalarProperty Name="ID_Ingred" ColumnName="ID_Ingred" />
+                <ScalarProperty Name="amount_Ingred" ColumnName="amount_Ingred" />
+                <ScalarProperty Name="ID_Unit_Measure" ColumnName="ID_Unit_Measure" />
+                <ScalarProperty Name="ID_Recipe" ColumnName="ID_Recipe" />
+                <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REGISTER_FOOD">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.REGISTER_FOOD">
+              <MappingFragment StoreEntitySet="REGISTER_FOOD">
+                <ScalarProperty Name="ID_Regis_Product" ColumnName="ID_Regis_Product" />
+                <ScalarProperty Name="amount_Product" ColumnName="amount_Product" />
+                <ScalarProperty Name="date_Regis_Food" ColumnName="date_Regis_Food" />
+                <ScalarProperty Name="date_Upda_Food" ColumnName="date_Upda_Food" />
+                <ScalarProperty Name="delete_Food" ColumnName="delete_Food" />
+                <ScalarProperty Name="ID_Invent" ColumnName="ID_Invent" />
+                <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
+                <ScalarProperty Name="ID_Unit_Measure" ColumnName="ID_Unit_Measure" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="ID_Categ_Food" ColumnName="ID_Categ_Food" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORTs">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.REPORT">
+              <MappingFragment StoreEntitySet="REPORT">
+                <ScalarProperty Name="ID_Report" ColumnName="ID_Report" />
+                <ScalarProperty Name="date_Gener_Report" ColumnName="date_Gener_Report" />
+                <ScalarProperty Name="user_Regis" ColumnName="user_Regis" />
+                <ScalarProperty Name="user_Retir" ColumnName="user_Retir" />
+                <ScalarProperty Name="user_New" ColumnName="user_New" />
+                <ScalarProperty Name="user_Current" ColumnName="user_Current" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLEs">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLE">
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="name_Role" ColumnName="name_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPECIFICATION_FOOD">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.SPECIFICATION_FOOD">
+              <MappingFragment StoreEntitySet="SPECIFICATION_FOOD">
+                <ScalarProperty Name="ID_Specif_Food" ColumnName="ID_Specif_Food" />
+                <ScalarProperty Name="time_Opet_Days" ColumnName="time_Opet_Days" />
+                <ScalarProperty Name="delete_Food" ColumnName="delete_Food" />
+                <ScalarProperty Name="sugges_Conser_Food" ColumnName="sugges_Conser_Food" />
+                <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UNIT_MEASURE">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.UNIT_MEASURE">
+              <MappingFragment StoreEntitySet="UNIT_MEASURE">
+                <ScalarProperty Name="ID_Unit_Measure" ColumnName="ID_Unit_Measure" />
+                <ScalarProperty Name="type_Unit_Measure" ColumnName="type_Unit_Measure" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="Sazon_inteligenteDBModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="name_User" ColumnName="name_User" />
+                <ScalarProperty Name="email_User" ColumnName="email_User" />
+                <ScalarProperty Name="phone_User" ColumnName="phone_User" />
+                <ScalarProperty Name="passw_User" ColumnName="passw_User" />
+                <ScalarProperty Name="date_Regis_User" ColumnName="date_Regis_User" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="ID_Invent" ColumnName="ID_Invent" />
+                <ScalarProperty Name="last_Login_User" ColumnName="last_Login_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

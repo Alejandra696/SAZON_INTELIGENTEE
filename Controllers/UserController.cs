@@ -1,14 +1,11 @@
 ﻿using INTELIGENTE_SAZÓN.Dtos;
+using INTELIGENTE_SAZÓN.Repositories.Models;
 using INTELIGENTE_SAZÓN.Services;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 
-//CONTROLADOR PARA EL REGISTRO DE USUARIOS
 namespace INTELIGENTE_SAZÓN.Controllers
 {
     public class UserController : Controller
@@ -20,25 +17,36 @@ namespace INTELIGENTE_SAZÓN.Controllers
             _userService = new UserService();
         }
 
-        // MUESTRA EL FORMULARIO
+        // ============================================================
+        // REGISTRO DE USUARIOS
+        // ============================================================
+
         [HttpGet]
         public ActionResult RegisterUser()
         {
             return View(new UserDtos());
         }
 
-        // PROCESA EL FORMULARIO
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(UserDtos model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bool registrado = _userService.Register(model);
-
-                if (registrado)
+                if (ModelState.IsValid)
                 {
-                    return View("SucessUser");
+                    bool registrado = _userService.Register(model);
+
+                    if (registrado)
+                    {
+                        TempData["SuccessMessage"] = "✅ Registro realizado correctamente.";
+                        return RedirectToAction("RegisterUser");
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "❌ Error al registrar el usuario. Intenta nuevamente.");
             }
             return View("RegisterUser", model);
         }
@@ -48,115 +56,232 @@ namespace INTELIGENTE_SAZÓN.Controllers
             return View();
         }
 
+        // ============================================================  
+        // LOGIN DE USUARIOS  
+        // ============================================================  
 
-        //CONTROLADOR PARA EL INICIO DE SESIÒN DE LOS USUARIOS
-
-        //MUESTRA EL FORMULARIO DE LOGIN
         [HttpGet]
         public ActionResult LoginUser()
         {
-            return View(new UserDtos());
+            return View(new LoginDtos());
         }
 
-        // PROCESA EL FORMULARIO DE LOGIN
         [HttpPost]
-        [ValidateAntiForgeryToken] // SEGURIDAD CONTRA ATAQUES CSRF, PARA QUE LOS PERFILES ACTIVOS NO ESTEN EN PELIGROOU
-        public ActionResult Login(UserDtos model)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginDtos model)
         {
+            System.Diagnostics.Debug.WriteLine($"DEBUG Login - Usuario: {model.email_User}, Contraseña: {model.passw_User}");
+
             if (ModelState.IsValid)
             {
-                bool loginOk = _userService.Login(model.FullName, model.Password);
+                bool loginOk = _userService.Login(model.email_User, model.passw_User);
+
+                // 🔹 Si no encontró el usuario en la tabla USER, intentamos en PROFESSIONAL_PROFILE
+                if (!loginOk)
+                {
+                    using (var db = new Sazon_inteligenteDBEntities1())
+                    {
+                        var prof = db.PROFESSIONAL_PROFILEs
+                            .FirstOrDefault(p => p.email_User_Profile == model.email_User);
+
+                        if (prof != null)
+                        {
+                            // Verificamos con BCrypt
+                            bool passOk = BCrypt.Net.BCrypt.Verify(model.passw_User, prof.passw_User_Profile);
+                            if (passOk)
+                            {
+                                loginOk = true;
+
+                                // Crear objeto temporal para manejar sesión con los mismos campos
+                                Session["UserEmail"] = prof.email_User_Profile;
+                                Session["UserRoleId"] = prof.ID_Role;
+
+                                // Actualizamos último login en PROFESSIONAL_PROFILE
+                                prof.Last_Login_Profile = DateTime.Now;
+                                db.SaveChanges();
+
+                                System.Diagnostics.Debug.WriteLine($"✅ Login exitoso (profesional): {prof.email_User_Profile}");
+                            }
+                        }
+                    }
+                }
+
                 if (loginOk)
                 {
-                    return RedirectToAction("Index", "Home");
+                    // Solo si fue login normal (no profesional) necesitamos buscar usuario
+                    var user = _userService.GetUserByEmail(model.email_User);
+
+                    if (user != null)
+                    {
+                        Session["UserEmail"] = user.email_User;
+                        Session["UserRoleId"] = user.ID_Role;
+
+                        // ✅ Actualizar último login en tabla USER
+                        try
+                        {
+                            using (var db = new Sazon_inteligenteDBEntities1())
+                            {
+                                var usuarioDb = db.USERs.FirstOrDefault(u => u.email_User == user.email_User);
+                                if (usuarioDb != null)
+                                {
+                                    usuarioDb.last_Login_User = DateTime.Now;
+                                    db.SaveChanges();
+                                    System.Diagnostics.Debug.WriteLine($"✅ Último login actualizado en USER: {usuarioDb.email_User}");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine("⚠️ Error actualizando la fecha de último login: " + ex.Message);
+                        }
+
+                        // 🔁 Redirección por roles
+                        if (user.ID_Role == 4)
+                            return RedirectToAction("AdmiPrincipalUser", "User");
+                        else if (user.ID_Role == 3)
+                            return RedirectToAction("EngineerPrincipalUser", "User");
+                        else if (user.ID_Role == 2)
+                            return RedirectToAction("ChefPrincipalUser", "User");
+                        else
+                            return RedirectToAction("ClientPrincipalUser", "User");
+                    }
+                    else
+                    {
+                        // 🔁 Redirección para perfil profesional
+                        int rol = Convert.ToInt32(Session["UserRoleId"]);
+                        if (rol == 3)
+                            return RedirectToAction("EngineerPrincipalUser", "User");
+                        else if (rol == 2)
+                            return RedirectToAction("ChefPrincipalUser", "User");
+                        else
+                            return RedirectToAction("CLientPrincipalUser", "User");
+                    }
                 }
 
                 ModelState.AddModelError("", "Usuario o contraseña incorrectos.");
             }
 
-            return View(model);
+            return View("LoginUser", model);
         }
 
-        // VISTA DEL ADMINISTRADOR
+        // ============================================================
+        // VISTA PRINCIPAL DEL ADMINISTRADOR
+        // ============================================================
         [HttpGet]
         public ActionResult AdmiPrincipalUser()
         {
-            return View();
+            try
+            {
+                if (Session["UserEmail"] == null)
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToAction("LoginUser", "User");
+                }
+
+                var userRoleId = Session["UserRoleId"] != null ? Convert.ToInt32(Session["UserRoleId"]) : 0;
+
+                if (userRoleId != 4)
+                {
+                    TempData["ErrorMessage"] = "No tienes permisos para acceder a esta sección.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Error al cargar la vista del administrador: " + ex.Message;
+                return RedirectToAction("LoginUser", "User");
+            }
         }
 
-
-        // VISTA PARA QUE EL ADMI CREE LOS PERFILES PROFESIONALES  
+        // ============================================================
+        // VISTA PRINCIPAL DEL INGENIERO DE ALIMENTOS
+        // ============================================================
         [HttpGet]
-        public ActionResult AdmiProfePerUser()
+        public ActionResult EngineerPrincipalUser()
         {
-            // Muestra la vista con un modelo vacío  
-            return View(new ProfePerDtos());
+            try
+            {
+                if (Session["UserEmail"] == null)
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToAction("LoginUser", "User");
+                }
+
+                var userRoleId = Session["UserRoleId"] != null ? Convert.ToInt32(Session["UserRoleId"]) : 0;
+
+                if (userRoleId != 3)
+                {
+                    TempData["ErrorMessage"] = "No tienes permisos para acceder a esta sección.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Error al cargar la vista del Ingeniero: " + ex.Message;
+                return RedirectToAction("LoginUser", "User");
+            }
         }
 
-        // PROCESA EL FORMULARIO DE LOS PERFILES PROFESIONALES  
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateProfessionalProfile(ProfePerDtos model)
+        // ============================================================
+        // 👨‍🍳 VISTA PRINCIPAL DEL CHEF
+        // ============================================================
+        [HttpGet]
+        public ActionResult ChefPrincipalUser()
         {
-            // Solo admin puede acceder
-            if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
-                return RedirectToAction("Login");
-
-            // Valida el modelo
-            if (!ModelState.IsValid)
-                return View(model);
-
-            string savedFilePath = null;
-
-            // Validar archivo PDF  
-            if (model.Certificate != null && model.Certificate.ContentLength > 0)
+            try
             {
-                var allowedExt = new[] { ".pdf" };
-                var ext = Path.GetExtension(model.Certificate.FileName)?.ToLower();
-                if (Array.IndexOf(allowedExt, ext) < 0)
+                if (Session["UserEmail"] == null)
                 {
-                    ModelState.AddModelError("Certificate", "Tipo de archivo no permitido (solo PDF).");
-                    return View(model);
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToAction("LoginUser", "User");
                 }
 
-                const int maxBytes = 5 * 1024 * 1024; // 5 MB  
-                if (model.Certificate.ContentLength > maxBytes)
+                var userRoleId = Session["UserRoleId"] != null ? Convert.ToInt32(Session["UserRoleId"]) : 0;
+
+                // Solo permite acceso al rol del chef (ID_Role = 2 o el que definas)
+                if (userRoleId != 2)
                 {
-                    ModelState.AddModelError("Certificate", "El archivo excede 5 MB.");
-                    return View(model);
+                    TempData["ErrorMessage"] = "No tienes permisos para acceder a esta sección.";
+                    return RedirectToAction("Index", "Home");
                 }
 
-                // Carpeta de guardado
-                var folder = Server.MapPath("~/Content/certificates");
-                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                return View(); // Carga chefPrincipalUser.cshtml
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Error al cargar la vista del Chef: " + ex.Message;
+                return RedirectToAction("LoginUser", "User");
+            }
+        }
+        // ============================================================
+        // 🌟 VISTA PRINCIPAL DEL USUARIO GENERAL
+        // ============================================================
+        [HttpGet]
+        public ActionResult ClientPrincipalUser()
+        {
+            // ⚙️ Verificamos que el usuario esté logueado antes de mostrar la vista
+            if (Session["UserEmail"] == null)
+                return RedirectToAction("LoginUser", "User");
 
-                // Nombre único
-                var uniqueName = Guid.NewGuid().ToString() + ext;
-                var path = Path.Combine(folder, uniqueName);
-                model.Certificate.SaveAs(path);
-                savedFilePath = "/Content/certificates/" + uniqueName;
+            // 📧 Obtenemos el correo del usuario actual desde la sesión
+            string email = Session["UserEmail"].ToString();
+
+            // 🧠 Si necesitas traer datos del usuario desde la base de datos
+            // puedes hacerlo aquí (usa tu UserService o ClientService)
+            var user = _userService.GetUserByEmail(email);
+            if (user == null)
+            {
+                // Si no se encuentra el usuario, redirige al login
+                return RedirectToAction("LoginUser", "User");
             }
 
-            // Llamar al servicio para guardar en BD
-            var created = _userService.CreateProfessionalProfile(new ProfePerDtos
-            {
-                Nombre = model.Nombre,
-                Email = model.Email,
-                Password = model.Password,
-                Role = model.Role,
-                CertificatePath = savedFilePath
-            });
-
-            // ✅ Aquí devolvemos siempre algo en todos los caminos
-            if (created)
-            {
-                TempData["Success"] = "Perfil creado correctamente.";
-                return RedirectToAction("AdmiPrincipalUser");
-            }
-
-            // Si no se pudo crear
-            ModelState.AddModelError("", "Error al crear el perfil. Intenta nuevamente.");
-            return View(model);
+            // ✅ Carga la vista principal del usuario
+            // (asegúrate de que esté en Views/User/ClientPrincipalUser.cshtml)
+            return View("~/Views/User/ClientPrincipalUser.cshtml");
         }
     }
 }

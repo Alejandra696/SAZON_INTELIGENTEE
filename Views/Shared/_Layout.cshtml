@@ -1,15 +1,40 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        /* 💜 Estilo fijo para la barra superior */
+        .navbar {
+            background-color: #000 !important; /* fondo negro */
+            font-family: "Cooper Black", Arial, sans-serif !important;
+        }
+
+            .navbar .navbar-brand,
+            .navbar .nav-link {
+                color: #fff !important; /* letras blancas */
+                font-family: "Cooper Black", Arial, sans-serif !important;
+            }
+
+                .navbar .nav-link:hover,
+                .navbar .navbar-brand:hover {
+                    color: #bca9f7 !important; /* toque morado al pasar el mouse */
+                }
+
+        footer {
+            text-align: center;
+            color: #2b193e;
+            font-family: "Cooper Black", Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
         <div class="container">
             @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
@@ -25,6 +50,7 @@
             </div>
         </div>
     </nav>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

@@ -1,0 +1,318 @@
+﻿@{
+    ViewBag.Title = "Registro del Tiempo Óptimo Para Consumo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #eadcff;
+        font-family: "Cooper Black", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* === Cuadro general (contenedor principal) === */
+    .main-box {
+        max-width: 1000px;
+        margin: 40px auto;
+        background-color: #d9c9ff;
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .header h1 {
+            font-size: 32px;
+            color: #2b193e;
+            letter-spacing: 1px;
+        }
+
+    /* === Cada fila de alimento === */
+    .food-item {
+        background-color: #cdb8ff;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    .col-left {
+        flex: 1;
+        text-align: center;
+        color: #2b193e;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+        .col-left span {
+            display: block;
+            margin-top: 6px;
+        }
+
+    .col-mid {
+        flex: 2;
+    }
+
+    .col-right {
+        flex: 1;
+        text-align: center;
+    }
+
+    .name-input, .small-input {
+        width: 100%;
+        padding: 18px;
+        border-radius: 10px;
+        border: 2px solid #bca9f7;
+        background-color: #efe7ff;
+        font-family: "Cooper Black", sans-serif;
+        text-align: center;
+    }
+
+    .small-input {
+        width: 100%;
+        max-width: 150px;
+    }
+
+    .img-preview {
+        max-width: 100px;
+        max-height: 70px;
+        display: block;
+        margin: 6px auto;
+        border-radius: 10px;
+    }
+
+    /* === Sección de agregar más alimentos === */
+    .add-area {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #bba9f7;
+        border-radius: 18px;
+        padding: 18px 25px;
+        margin-top: 25px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+        .add-area img {
+            width: 85px;
+            height: auto;
+        }
+
+        .add-area div {
+            font-weight: bold;
+            color: #2b193e;
+            font-size: 22px;
+        }
+
+    .plus {
+        background-color: #e7dbff;
+        color: #2b193e;
+        width: 80px;
+        height: 80px;
+        border-radius: 15px;
+        font-size: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: none;
+        font-family: "Cooper Black", sans-serif;
+    }
+
+        .plus:hover {
+            background-color: #d8c5ff;
+        }
+
+    .btn-save {
+        display: block;
+        background-color: #a694f9;
+        color: #2b193e;
+        border: none;
+        padding: 14px 35px;
+        border-radius: 18px;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 35px auto 0;
+        transition: 0.3s;
+    }
+
+        .btn-save:hover {
+            background-color: #8f7de7;
+        }
+
+    .message {
+        text-align: center;
+        color: green;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .error {
+        text-align: center;
+        color: darkred;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .invalid {
+        border: 2px solid red !important;
+        background-color: #ffe6e6;
+    }
+
+    /* === Restaurar header del layout predeterminado === */
+    header.navbar, .navbar, .navbar-inverse {
+        background-color: #000 !important;
+        border: none !important;
+    }
+
+        .navbar a, .navbar-nav > li > a, .navbar-brand {
+            color: #fff !important;
+        }
+
+            .navbar a:hover {
+                color: #ddd !important;
+            }
+</style>
+
+<div class="main-box">
+    <div class="header">
+        <h1>REGISTRO DEL TIEMPO ÓPTIMO PARA CONSUMO DE LOS ALIMENTOS PERECEDEROS</h1>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="message">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="error">@TempData["Error"]</div>
+    }
+
+    @using (Html.BeginForm("EngiRegisterFoodSave", "FoodEngi", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm();" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="itemsContainer">
+            <div class="food-item">
+                <div class="row">
+                    <label class="col-left" onclick="document.getElementById('file-0').click();">
+                        <img src="~/Content/images/mouse.png" style="width:50px;" />
+                        <span>IMAGEN DEL ALIMENTO</span>
+                        <input id="file-0" name="foodImage" type="file" accept="image/*" style="display:none" onchange="onFileChange(this)" />
+                        <img class="img-preview" style="display:none" />
+                    </label>
+
+                    <div class="col-mid">
+                        <input type="text" name="foodName" class="name-input" placeholder="NOMBRE DEL ALIMENTO" />
+                    </div>
+
+                    <div class="col-right">
+                        <div style="font-weight:bold; margin-bottom:6px;">TIEMPO SUGERIDO EN DÍAS:</div>
+                        <input type="text" name="foodDays" class="small-input" placeholder="ej. 7" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="add-area">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <img src="~/Content/images/food.png" />
+                <div>AGREGAR MÁS ALIMENTOS PERECEDEROS</div>
+            </div>
+            <div class="plus" id="addBtn">+</div>
+        </div>
+
+        <button type="submit" class="btn-save">GUARDAR CAMBIOS</button>
+    }
+</div>
+
+<script>
+    (function () {
+        let counter = 1;
+        document.getElementById('addBtn').addEventListener('click', addItem);
+
+        function addItem() {
+            const container = document.getElementById('itemsContainer');
+            const template = document.querySelector('.food-item').cloneNode(true);
+
+            const fileInput = template.querySelector('input[type="file"]');
+            fileInput.id = 'file-' + counter;
+            fileInput.value = '';
+            fileInput.setAttribute('name', 'foodImage');
+            fileInput.onchange = function () { onFileChange(this); };
+
+            const preview = template.querySelector('.img-preview');
+            preview.style.display = 'none';
+            preview.src = '';
+
+            template.querySelector('input[name="foodName"]').value = '';
+            template.querySelector('input[name="foodDays"]').value = '';
+
+            const label = template.querySelector('.col-left');
+            label.onclick = function () { document.getElementById(fileInput.id).click(); };
+
+            container.appendChild(template);
+            counter++;
+        }
+    })();
+
+    function onFileChange(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        const preview = input.parentElement.querySelector('.img-preview');
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function validateForm() {
+        let valid = true;
+        const items = document.querySelectorAll('.food-item');
+
+        items.forEach(item => {
+            const name = item.querySelector('input[name="foodName"]');
+            const days = item.querySelector('input[name="foodDays"]');
+            const file = item.querySelector('input[type="file"]');
+
+            name.classList.remove('invalid');
+            days.classList.remove('invalid');
+            file.parentElement.classList.remove('invalid');
+
+            if (!name.value.trim()) {
+                name.classList.add('invalid');
+                valid = false;
+            }
+            if (!days.value.trim()) {
+                days.classList.add('invalid');
+                valid = false;
+            }
+            if (!file.files.length) {
+                file.parentElement.classList.add('invalid');
+                valid = false;
+            }
+        });
+
+        if (!valid) {
+            alert("Por favor completa todos los campos (imagen, nombre y tiempo sugerido) antes de guardar.");
+        }
+
+        return valid;
+    }
+</script>

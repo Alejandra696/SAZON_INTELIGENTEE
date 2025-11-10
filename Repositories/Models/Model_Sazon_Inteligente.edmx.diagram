@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d0bb6479f60c4913827b9fcc87daa17e" Name="Diagram1">
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.CATEGORY_FOOD" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.FAVORITE_RECIPE" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.FOOD" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.INVENTORY" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.PROFESSIONAL_PROFILE" Width="1.5" PointX="8.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.RECIPE" Width="1.5" PointX="6" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.RECIPE_INGREDIENTS" Width="1.5" PointX="11.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.REGISTER_FOOD" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.REPORT" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.ROLE" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.SPECIFICATION_FOOD" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.UNIT_MEASURE" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sazon_inteligenteDBModel.USER" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_REGISTER_FOOD_CATEGORY_FOOD" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_FAVORITE_RECIPE_RECIPE" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_FAVORITE_RECIPE_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_RECIPE_INGREDIENTS_FOOD1" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_REGISTER_FOOD_FOOD" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_SPECIFICATION_FOOD_FOOD" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_REGISTER_FOOD_INVENTORY" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_USER_INVENTORY" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_PROFESSIONAL_PROFILE_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_RECIPE_INGREDIENTS_RECIPE" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_RECIPE_INGREDIENTS_UNIT_MEASURE" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_REGISTER_FOOD_UNIT_MEASURE" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_REGISTER_FOOD_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="Sazon_inteligenteDBModel.FK_USER_ROLE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

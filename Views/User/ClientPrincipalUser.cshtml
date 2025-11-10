@@ -1,0 +1,217 @@
+﻿@model INTELIGENTE_SAZÓN.Dtos.UserDtos
+@{
+    ViewBag.Title = "SAZÓN INTELIGENTE - Principal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #EAD9FF;
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Recuadro general */
+    .main-container {
+        width: 85%;
+        max-width: 1200px;
+        margin: 40px auto;
+        background: #EFE6FA;
+        border-radius: 25px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        padding: 30px 50px;
+        text-align: center;
+    }
+
+    /* Encabezado */
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+        .header .logo {
+            position: absolute;
+            left: 0;
+        }
+
+            .header .logo img {
+                width: 110px; /* 🔹 Más pequeño para que no sobresalga */
+                height: 110px;
+            }
+
+        .header .title {
+            font-size: 52px; /* 🔹 Un poco más grande */
+            font-weight: 900;
+            color: #2B193E;
+            font-family: 'Cooper Black', sans-serif;
+            text-align: center;
+            margin: 0;
+        }
+
+    /* Sección central */
+    .content-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 80px 100px;
+        justify-items: center;
+        margin-top: 50px;
+    }
+
+        .content-grid .single {
+            position: relative;
+            text-align: center;
+        }
+
+    /* Ratones encima de los botones */
+    .raton-img {
+        width: 120px;
+        position: absolute;
+        top: -125px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* 🔹 Ratón específico de zanahorias y recetas: subir un poco más */
+    .raton-zanahorias {
+        top: -135px;
+    }
+
+    .raton-escribiendo {
+        top: -130px;
+    }
+
+    /* Botones principales */
+    .btn-main {
+        background-color: #C6A8F7;
+        border: none;
+        border-radius: 18px;
+        padding: 22px 40px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #2B193E;
+        cursor: pointer;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease;
+        min-width: 330px; /* 🔹 Botones un poco más anchos */
+    }
+
+        .btn-main:hover {
+            transform: scale(1.05);
+        }
+
+    /* Imagen estante debajo de cada botón */
+    .shelf-img {
+        width: 340px; /* 🔹 Mismo ancho visual del botón */
+        margin-top: -10px; /* 🔹 Lo subimos más cerca del botón */
+    }
+
+    /* Recuadro grande: última fila centrada */
+    .single.full-width {
+        grid-column: 1 / span 2;
+    }
+
+    /* Sección inferior */
+    .bottom-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+        padding: 0 15px;
+    }
+
+    .link-profile {
+        font-weight: 700;
+        font-size: 18px;
+        text-decoration: none;
+        color: #2B193E;
+    }
+
+    .btn-logout {
+        background-color: #B394D4;
+        color: #2B193E;
+        border: none;
+        border-radius: 18px;
+        padding: 12px 34px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: background 0.2s ease;
+    }
+
+        .btn-logout:hover {
+            background-color: #A17CC5;
+        }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+            grid-gap: 60px;
+        }
+
+        .single.full-width {
+            grid-column: 1;
+        }
+
+        .header .title {
+            font-size: 36px;
+        }
+
+        .shelf-img {
+            width: 260px;
+        }
+    }
+</style>
+
+<div class="main-container">
+    <div class="header">
+        <div class="logo">
+            <img src="~/Content/Images/Logo.jpg" alt="Logo" />
+        </div>
+        <h1 class="title">SAZÓN INTELIGENTE</h1>
+    </div>
+
+    <div class="content-grid">
+        <div class="single">
+            <button class="btn-main" onclick="location.href='@Url.Action("RegisterProduct","Client")'">REGISTRO DE PRODUCTOS</button>
+            <img src="~/Content/Images/shelf.png" class="shelf-img" alt="tabla" />
+        </div>
+
+        <div class="single">
+            <button class="btn-main" onclick="location.href='@Url.Action("ViewInventory","Client")'">VISUALIZAR INVENTARIO</button>
+            <img src="~/Content/Images/shelf.png" class="shelf-img" alt="tabla" />
+        </div>
+
+        <div class="single">
+            <img src="~/Content/Images/food.png" class="raton-img raton-zanahorias" alt="ratón zanahorias" />
+            <button class="btn-main" onclick="location.href='@Url.Action("UpdateInventory","Client")'">ACTUALIZAR INVENTARIO</button>
+            <img src="~/Content/Images/shelf.png" class="shelf-img" alt="tabla" />
+        </div>
+
+        <div class="single">
+            <img src="~/Content/Images/writemouse.png" class="raton-img raton-escribiendo" alt="ratón escribiendo" />
+            <button class="btn-main" onclick="location.href='@Url.Action("Recommendations","Client")'">RECOMENDACIONES DE RECETAS</button>
+            <img src="~/Content/Images/shelf.png" class="shelf-img" alt="tabla" />
+        </div>
+
+        <div class="single full-width">
+            <img src="~/Content/Images/mousetongue.png" class="raton-img" alt="ratón lengua" />
+            <button class="btn-main" onclick="location.href='@Url.Action("FavoriteRecipes","Client")'">RECETAS FAVORITAS</button>
+            <img src="~/Content/Images/shelf.png" class="shelf-img" alt="tabla" />
+        </div>
+    </div>
+
+    <div class="bottom-links">
+        <a href="@Url.Action("Profile","Client")" class="link-profile">👤 PERFIL</a>
+
+        @using (Html.BeginForm("Logout", "Client", FormMethod.Post, new { @style = "display:inline-block;" }))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn-logout">CERRAR SESIÓN</button>
+        }
+    </div>
+</div>
