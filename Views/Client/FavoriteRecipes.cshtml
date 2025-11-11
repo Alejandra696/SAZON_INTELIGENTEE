@@ -1,0 +1,117 @@
+﻿@model List<INTELIGENTE_SAZÓN.Dtos.RecipeRecommendationDto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Recetas Favoritas";
+}
+
+<!-- ===================================== -->
+<!-- ESTILOS -->
+<!-- ===================================== -->
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fdf8f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-fav {
+        max-width: 1000px;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 30px;
+    }
+
+    h2 {
+        color: #e67300;
+        font-size: 26px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .recipe-card {
+        display: flex;
+        align-items: flex-start;
+        background: #fff8f0;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+        .recipe-card img {
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+    .recipe-details {
+        flex: 1;
+    }
+
+        .recipe-details h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .recipe-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+    .btn-back {
+        display: inline-block;
+        background-color: #e67300;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 25px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-back:hover {
+            background-color: #cc6600;
+        }
+</style>
+
+<!-- ===================================== -->
+<!-- CONTENIDO -->
+<!-- ===================================== -->
+<div class="container-fav">
+    <h2>Aquí encontrarás todas tus recetas favoritas 🍳</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <p>No tienes recetas marcadas como favoritas.</p>
+    }
+    else
+    {
+        foreach (var recipe in Model)
+        {
+            <div class="recipe-card">
+                <img src="@recipe.imag_Recipe" alt="@recipe.name_Recipe" />
+                <div class="recipe-details">
+                    <h3>@recipe.name_Recipe</h3>
+                    <p><strong>Ingredientes:</strong></p>
+                    <ul>
+                        @foreach (var ing in recipe.Ingredients)
+                        {
+                            <li>@ing.name_Food (@ing.amount_Ingred)</li>
+                        }
+                    </ul>
+                    <p><strong>Instrucciones:</strong> @recipe.instruc_Recipe</p>
+                </div>
+            </div>
+        }
+    }
+
+    <a href="@Url.Action("ClientPrincipalUser", "User")" class="btn-back">Volver</a>
+</div>
+

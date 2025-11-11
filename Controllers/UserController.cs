@@ -214,7 +214,7 @@ namespace INTELIGENTE_SAZÓN.Controllers
                 if (userRoleId != 3)
                 {
                     TempData["ErrorMessage"] = "No tienes permisos para acceder a esta sección.";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("LoginUser", "User");
                 }
 
                 return View();
@@ -246,7 +246,7 @@ namespace INTELIGENTE_SAZÓN.Controllers
                 if (userRoleId != 2)
                 {
                     TempData["ErrorMessage"] = "No tienes permisos para acceder a esta sección.";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("LoginUser", "User");
                 }
 
                 return View(); // Carga chefPrincipalUser.cshtml

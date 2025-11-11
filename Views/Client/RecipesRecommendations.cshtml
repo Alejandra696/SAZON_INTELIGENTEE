@@ -1,0 +1,173 @@
+﻿@model List<INTELIGENTE_SAZÓN.Dtos.RecipeRecommendationDto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Recomendación de Recetas";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<style>
+    .recipe-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        padding: 18px;
+        margin-bottom: 18px;
+        display: flex;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .recipe-image {
+        width: 160px;
+        height: 120px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #f6f6f6;
+    }
+
+    .recipe-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .recipe-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+    }
+
+    .recipe-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .ingredients-list {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 6px;
+    }
+
+    .instruc {
+        font-size: 13px;
+        color: #555;
+        margin-top: 8px;
+    }
+
+    .heart-btn {
+        font-size: 22px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+    }
+
+        .heart-btn.fav {
+            color: #e63946;
+        }
+    /* rojo cuando es favorito */
+    .badge-match {
+        background: #e6f4ea;
+        color: #2b7a3a;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+</style>
+
+<div class="container" style="margin-top:30px;">
+    <h2>Recomendación de Recetas</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+    {
+        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+    }
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-info">No hay recetas recomendadas por el momento.</div>
+    }
+    else
+    {
+        foreach (var r in Model)
+        {
+            <div class="recipe-card" data-recipeid="@r.ID_Recipe">
+                <div>
+                    <img src="@Url.Content(r.imag_Recipe ?? "~/Content/images/default_recipe.png")" alt="@r.name_Recipe" class="recipe-image" />
+                </div>
+                <div class="recipe-body">
+                    <div class="recipe-top">
+                        <div style="flex:1;">
+                            <div class="recipe-title">@r.name_Recipe</div>
+                            <div class="ingredients-list">
+                                <strong>Ingredientes:</strong>
+                                @foreach (var ing in r.Ingredients)
+                                {
+                                    <span style="display:inline-block;margin-right:8px;">
+                                        @ing.name_Food (@ing.amount_Ingred @ing.unitName)
+                                    </span>
+                                }
+                            </div>
+                        </div>
+
+                        <div style="text-align:right;">
+                            <div class="badge-match">
+                                @r.matchedIngredients / @r.totalIngredients
+                            </div>
+                            <button class="heart-btn @(r.IsFavorite ? "fav" : "") btn-toggle-fav" data-recipe="@r.ID_Recipe" title="Agregar a favoritos">
+                                <i class="fa@(r.IsFavorite ? "s" : "r") fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="instruc">
+                        <strong>Preparación:</strong>
+                        <div>@Html.Raw(HttpUtility.HtmlEncode(r.instruc_Recipe).Replace("\n", "<br/>"))</div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div style="margin-top:20px;">
+        <a href="@Url.Action("ClientPrincipalUser","User")" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $('.btn-toggle-fav').on('click', function(e){
+                e.preventDefault();
+                var btn = $(this);
+                var recipeId = btn.data('recipe');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ToggleFavorite","Client")',
+                    data: { idRecipe: recipeId },
+                    success: function(resp){
+                        if(resp.ok){
+                            // Cambia el icono y clase
+                            if(resp.isFavorite){
+                                btn.addClass('fav');
+                                btn.find('i').removeClass('far').addClass('fas');
+                            } else {
+                                btn.removeClass('fav');
+                                btn.find('i').removeClass('fas').addClass('far');
+                            }
+                        } else {
+                            alert('Error: ' + resp.message);
+                        }
+                    },
+                    error: function(xhr){
+                        alert('Error en la petición. Intenta de nuevo.');
+                    }
+                });
+            });
+        });
+    </script>
+}

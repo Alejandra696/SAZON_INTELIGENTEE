@@ -305,6 +305,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Client\RecipesRecommendations.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -334,6 +335,7 @@
     <Content Include="Views\User\ClientPrincipalUser.cshtml" />
     <Content Include="Views\Client\RegisterProduct.cshtml" />
     <Content Include="Views\Client\ViewInventory.cshtml" />
+    <Content Include="Views\Client\FavoriteRecipes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
