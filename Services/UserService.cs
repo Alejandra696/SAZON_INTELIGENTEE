@@ -122,7 +122,7 @@ namespace INTELIGENTE_SAZÓN.Services
         // ============================================================
         private string HashPassword(string password)
         {
-            // ✅ Genera el hash con salt automático (más seguro)
+            // ✅ Genera el hash con sal automático (más seguro)
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
 

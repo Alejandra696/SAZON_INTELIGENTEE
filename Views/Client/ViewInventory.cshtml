@@ -13,7 +13,7 @@
 
     .title {
         text-align: center;
-        font-size: 46px;
+        font-size: 52px;
         margin-top: 20px;
         margin-bottom: 35px;
         color: #2B144D;
@@ -36,7 +36,7 @@
     }
 
     .category-title {
-        font-size: 28px;
+        font-size: 40px;
         font-weight: bold;
         color: #2B144D;
         display: flex;
@@ -59,7 +59,7 @@
 
     .food-info p {
         margin: 2px 0;
-        font-size: 15px;
+        font-size: 22px;
         color: #2A145E;
     }
 
@@ -91,6 +91,16 @@
         color: #3A1A6E;
     }
 
+    .empty-message {
+        font-size: 22px;
+        color: #4B2E83;
+        background: #EDE5FF;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
     .back-btn {
         display: block;
         width: 250px;
@@ -117,37 +127,39 @@
 <div class="container-inventory">
 
     @{
-        // orden de categorias
+        // Orden de categorías
         var orderedCategories = new List<string>
     {
-            "Proteínas",
-            "Lácteos",
-            "Cereales y Harinas",
+            "Proteinas",
+            "Lacteos",
+            "Cereales y harinas",
             "Vegetales",
             "Frutas",
             "Otros"
         };
 
-        // emojis representativos
+        // Emojis representativos
         var icons = new Dictionary<string, string>
     {
-            { "Proteínas", "🥩" },
-            { "Lácteos", "🧀" },
-            { "Cereales y Harinas", "🌽" },
-            { "Vegetales", "🥦" },
-            { "Frutas", "🍎" },
-            { "Otros", "🍽️" }
+            { "Proteinas", "🥩" },
+            { "Lacteos", "🧀" },
+            { "Cereales y harinas", "🌾" },
+            { "Vegetales", "🥗" },
+            { "Frutas", "🍓" },
+            { "Otros", "🍱" }
         };
     }
 
     @foreach (var cat in orderedCategories)
     {
-        if (Model.ContainsKey(cat) && Model[cat].Count > 0)
-        {
-            <div class="category-box">
-                <div class="category-title">@cat @icons[cat]</div>
+        <div class="category-box">
+            <div class="category-title">
+                @cat @((icons.ContainsKey(cat)) ? icons[cat] : "")
+            </div>
 
-                @foreach (var item in Model[cat])
+            @if (Model.ContainsKey(cat) && Model[cat].Count > 0)
+            {
+                foreach (var item in Model[cat])
                 {
                     <div class="food-card">
 
@@ -168,9 +180,14 @@
 
                     </div>
                 }
-            </div>
-        }
+            }
+            else
+            {
+                <p class="empty-message">🍽️ No hay alimentos registrados en esta categoría.</p>
+            }
+        </div>
     }
+
 </div>
 
-<a href="@Url.Action("ClientPrincipalUser", "Client")" class="back-btn">VOLVER</a>
+<a href="@Url.Action("ClientPrincipalUser", "User")" class="back-btn">VOLVER</a>

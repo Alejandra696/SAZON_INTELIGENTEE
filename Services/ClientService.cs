@@ -94,21 +94,30 @@ namespace INTELIGENTE_SAZÓN.Services
             var user = _repo.GetUserByEmail(email);
             var inventory = _repo.GetOrCreateInventoryForUser(user.ID_User);
 
+            // 🟣 Obtener los alimentos registrados
             var items = _repo.GetInventoryItems(inventory.ID_Invent);
 
+            // 🟣 Agrupar los alimentos por categoría
             var grouped = items
                 .GroupBy(i => i.CategoryName)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
-            return grouped;
-        }
+            // 🟣 Obtener todas las categorías del sistema
+            var allCategories = _repo.GetCategories()
+                .Select(c => c.Value)
+                .ToList();
 
-        public USER GetUserByEmail(string email)
-        {
-            using (var repo = new ClientRepository())
+            // 🟣 Asegurar que todas las categorías existan en el diccionario,
+            // incluso las que están vacías
+            foreach (var category in allCategories)
             {
-                return repo.GetUserByEmail(email);
+                if (!grouped.ContainsKey(category))
+                {
+                    grouped[category] = new List<InventoryItemDto>();
+                }
             }
+
+            return grouped;
         }
 
 
