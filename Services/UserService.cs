@@ -155,5 +155,46 @@ namespace INTELIGENTE_SAZÓN.Services
                 System.Diagnostics.Debug.WriteLine("❌ ERROR en UpdateLastLoginUser: " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Generates a temporary password, encrypts it, and updates the user record.
+        /// </summary>
+        public string GenerateAndUpdateTemporaryPassword(string email)
+        {
+            string normalicedEmail = email?.Trim().ToLower();
+            // 1️⃣ Find user
+            var user = _userRepository.GetUserByEmail(normalicedEmail);
+            if (user == null)
+                throw new Exception("No user found with this email.");
+
+            // 2️⃣ Generate temporary password
+            string temporaryPassword = GenerateTemporaryPassword(8);
+
+            // 3️⃣ Encrypt
+            string encryptedPassword = BCrypt.Net.BCrypt.HashPassword(temporaryPassword);
+
+            // 4️⃣ Update password in repository
+            _userRepository.UpdatePassword(user.ID_User, encryptedPassword);
+
+            // 5️⃣ Return plain password (for email)
+            return temporaryPassword;
+        }
+
+        /// <summary>
+        /// Generates a random string for the temporary password.
+        /// </summary>
+        private string GenerateTemporaryPassword(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            var result = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new string(result);
+        }
     }
 }

@@ -122,22 +122,58 @@
         <div>
             @Html.LabelFor(m => m.email_User, "Correo electrónico:")
             @Html.TextBoxFor(m => m.email_User, new { @class = "input" })
-            @Html.ValidationMessageFor(m => m.email_User, "", new {@class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.email_User, "", new { @class = "text-danger" })
         </div>
 
         <div>
             @Html.LabelFor(m => m.passw_User, "Contraseña:")
             @Html.PasswordFor(m => m.passw_User, new { @class = "input" })
-            @Html.ValidationMessageFor(m => m.passw_User, "", new {@class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.passw_User, "", new { @class = "text-danger" })
         </div>
 
         <button type="submit" class="btn">INICIAR SESIÓN</button>
+        if (ViewBag.Message != null)
+        {
+            <div style="color: green; font-weight: bold; margin-top: 15px;">
+                @ViewBag.Message
+            </div>
+        }
+        if (ViewBag.Error != null)
+        {
+            <div style="color: red; font-weight: bold; margin-top: 15px;">
+                @ViewBag.Error
+            </div>
+        }
     }
 
-    <p class="links">
-        <a href="#">¿HAS OLVIDADO TU CONTRASEÑA?</a><br />
-        <a href="@Url.Action("RegisterUser","User")">REGISTRARSE</a>
-    </p>
+<p class="links">
+    <a href="javascript:void(0);" onclick="enviarRecuperacion()">¿HAS OLVIDADO TU CONTRASEÑA?</a>
+
+    @using (Html.BeginForm("ForgotPassword", "User", FormMethod.Post, new { id = "forgotForm" }))
+    {
+        @Html.Hidden("email", null, new { id = "hiddenEmail" })
+    }
+
+    <script>
+        function enviarRecuperacion() {
+            // Obtiene lo que el usuario escribió en el campo de correo
+            var emailInput = document.querySelector('input[name="email_User"]').value;
+
+            if (!emailInput) {
+                alert("Por favor, escribe tu correo antes de recuperar la contraseña.");
+                return;
+            }
+
+            // Copia ese valor al campo oculto
+            document.getElementById('hiddenEmail').value = emailInput;
+
+            // Envía el formulario
+            document.getElementById('forgotForm').submit();
+        }
+    </script>
+
+    <a href="@Url.Action("RegisterUser","User")">REGISTRARSE</a>
+</p>
 </div>
 
 

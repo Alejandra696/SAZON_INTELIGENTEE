@@ -71,6 +71,7 @@ namespace INTELIGENTE_SAZÓN.Controllers
         // ============================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult AdmiActivePerUser(FormCollection form)
         {
             if (Session["UserRoleId"] == null || Session["UserRoleId"].ToString() != "4")

@@ -31,6 +31,7 @@ namespace INTELIGENTE_SAZÓN.Repositories.Models
         public Nullable<int> ID_Role { get; set; }
         public Nullable<int> ID_Invent { get; set; }
         public Nullable<System.DateTime> last_Login_User { get; set; }
+        public Nullable<bool> is_Temp_Passw { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FAVORITE_RECIPE> FAVORITE_RECIPE { get; set; }

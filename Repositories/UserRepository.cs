@@ -69,7 +69,7 @@ namespace INTELIGENTE_SAZÓN.Repositories
         {
             try
             {
-                return _context.USERs.FirstOrDefault(u => u.email_User == email);
+                return _context.USERs.FirstOrDefault(u => u.email_User.Trim().ToLower() == email.Trim().ToLower());
             }
             catch (Exception ex)
             {
@@ -99,5 +99,17 @@ namespace INTELIGENTE_SAZÓN.Repositories
             }
         }
 
+
+        // Update user's encrypted password
+        public void UpdatePassword(int userId, string encryptedPassword)
+        {
+            var user = _context.USERs.FirstOrDefault(u => u.ID_User == userId);
+            if (user != null)
+            {
+                user.passw_User = encryptedPassword;
+                _context.SaveChanges();
+            }
+        }
     }
 }
+

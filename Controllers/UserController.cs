@@ -1,6 +1,7 @@
 ﻿using INTELIGENTE_SAZÓN.Dtos;
 using INTELIGENTE_SAZÓN.Repositories.Models;
 using INTELIGENTE_SAZÓN.Services;
+using INTELIGENTE_SAZÓN.Utilities;
 using System;
 using System.Linq;
 using System.Web;
@@ -11,10 +12,12 @@ namespace INTELIGENTE_SAZÓN.Controllers
     public class UserController : Controller
     {
         private readonly UserService _userService;
+        private readonly MailManager _mailManager;
 
         public UserController()
         {
             _userService = new UserService();
+            _mailManager = new MailManager();
         }
 
         // ============================================================
@@ -164,10 +167,52 @@ namespace INTELIGENTE_SAZÓN.Controllers
             return View("LoginUser", model);
         }
 
-        // ============================================================
-        // VISTA PRINCIPAL DEL ADMINISTRADOR
-        // ============================================================
-        [HttpGet]
+
+        // ===========================================================
+        // MÉTODO POST: Recuperar contraseña (Forgot Password)
+        // ===========================================================
+
+        [HttpPost]
+        public ActionResult ForgotPassword(string email)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Email Recibido" + email);
+                // 1️⃣ Generar y guardar contraseña temporal desde el Service
+                var temporaryPassword = _userService.GenerateAndUpdateTemporaryPassword(email);
+
+                if (string.IsNullOrEmpty(temporaryPassword))
+                {
+                    ViewBag.Error = "The entered email does not exist in the system.";
+                    return View("LoginUser");
+                }
+
+                // 2️⃣ Construir cuerpo del correo con la plantilla HTML
+                string htmlBody = MailTemplates.BuildPasswordRecoveryEmail(temporaryPassword);
+
+                // 3️⃣ Enviar correo
+                _mailManager.SendMail(
+                    addressee: email,
+                    subject: "Password Recovery - INTELIGENTE SAZÓN",
+                    messagebody: htmlBody,
+                    html: true
+                );
+
+                // 4️⃣ Confirmar envío
+                ViewBag.Message = "We’ve sent you an email with your temporary password.";
+                return View("LoginUser");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Error sending password recovery email: " + ex.Message;
+                return View("LoginUser");
+            }
+        }
+
+// ============================================================
+// VISTA PRINCIPAL DEL ADMINISTRADOR
+// ============================================================
+[HttpGet]
         public ActionResult AdmiPrincipalUser()
         {
             try

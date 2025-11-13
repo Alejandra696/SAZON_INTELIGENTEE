@@ -159,5 +159,20 @@ namespace INTELIGENTE_SAZÓN.Controllers
                 return RedirectToAction("EngiSpeciFood");
             }
         }
+        // =======================================================================
+        // MÉTODO: Redirigir a vista principal del usuario (ClientPrincipalUser)
+        // ========================================================================
+        public ActionResult ClientPrincipalEngi()
+        {
+            try
+            {
+                return RedirectToAction("ClientPrincipalUser", "Client");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Error al redirigir a la vista del usuario: " + ex.Message;
+                return View("Error");
+            }
+        }
     }
 }

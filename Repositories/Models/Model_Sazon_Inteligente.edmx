@@ -137,6 +137,7 @@
           <Property Name="ID_Role" Type="int" />
           <Property Name="ID_Invent" Type="int" />
           <Property Name="last_Login_User" Type="date" />
+          <Property Name="is_Temp_Passw" Type="bit" />
         </EntityType>
         <Association Name="FK_FAVORITE_RECIPE_RECIPE">
           <End Role="RECIPE" Type="Self.RECIPE" Multiplicity="0..1" />
@@ -537,6 +538,7 @@
           <Property Name="ID_Role" Type="Int32" />
           <Property Name="ID_Invent" Type="Int32" />
           <Property Name="last_Login_User" Type="DateTime" Precision="0" />
+          <Property Name="is_Temp_Passw" Type="Boolean" />
           <NavigationProperty Name="FAVORITE_RECIPE" Relationship="Self.FK_FAVORITE_RECIPE_USER" FromRole="USER" ToRole="FAVORITE_RECIPE" />
           <NavigationProperty Name="INVENTORY" Relationship="Self.FK_USER_INVENTORY" FromRole="USER" ToRole="INVENTORY" />
           <NavigationProperty Name="PROFESSIONAL_PROFILE" Relationship="Self.FK_PROFESSIONAL_PROFILE_USER" FromRole="USER" ToRole="PROFESSIONAL_PROFILE" />
@@ -931,6 +933,7 @@
                 <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
                 <ScalarProperty Name="ID_Invent" ColumnName="ID_Invent" />
                 <ScalarProperty Name="last_Login_User" ColumnName="last_Login_User" />
+                <ScalarProperty Name="is_Temp_Passw" ColumnName="is_Temp_Passw" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

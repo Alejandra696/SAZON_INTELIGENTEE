@@ -84,5 +84,20 @@ namespace INTELIGENTE_SAZÓN.Controllers
                 return RedirectToAction("ChefCreateRecipe");
             }
         }
+        // =======================================================================
+        // MÉTODO: Redirigir a vista principal del usuario (ClientPrincipalUser)
+        // ========================================================================
+        public ActionResult ClientPrincipal()
+        {
+            try
+            {
+                return RedirectToAction("ClientPrincipalUser", "Client");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Error al redirigir a la vista del usuario: " + ex.Message;
+                return View("Error");
+            }
+        }
     }
 }
