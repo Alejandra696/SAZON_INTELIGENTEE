@@ -204,7 +204,7 @@
         <!-- Eliminar productos (centro) -->
         <div class="single full-width">
             <img src="~/Content/Images/food.png" class="raton-img raton-zanahorias" alt="food" />
-            <button class="btn-main" onclick="location.href='@Url.Action("DeleteInventory","Client")'">
+            <button class="btn-main" onclick="location.href='@Url.Action("Maintenance","User")'">
                 ELIMINAR PRODUCTOS DEL INVENTARIO
             </button>
             <img src="~/Content/Images/shelf.png" class="shelf-img" alt="tabla" />
@@ -232,7 +232,7 @@
 
     <!-- Abrir perfil / Cerrar sesión -->
     <div class="bottom-links">
-        <a href="@Url.Action("Profile","Client")" class="link-profile">👤 PERFIL</a>
+        <a href="@Url.Action("Maintenance","User")" class="link-profile">👤 PERFIL</a>
 
         <a href="@Url.Action("LoginUser", "User")" class="btn-logout">CERRAR SESIÓN</a>
     </div>

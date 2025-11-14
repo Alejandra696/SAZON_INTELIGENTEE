@@ -328,5 +328,9 @@ namespace INTELIGENTE_SAZÓN.Controllers
             // (asegúrate de que esté en Views/User/ClientPrincipalUser.cshtml)
             return View("~/Views/User/ClientPrincipalUser.cshtml");
         }
+
+        public ActionResult Maintenance()
+            { return View(); 
+        }
     }
 }

@@ -156,9 +156,9 @@ namespace INTELIGENTE_SAZÓN.Services
             }
         }
 
-        /// <summary>
-        /// Generates a temporary password, encrypts it, and updates the user record.
-        /// </summary>
+        // ===========================================================
+        // GENERAR CONTRASEÑA TEMPORAL
+        // ===========================================================
         public string GenerateAndUpdateTemporaryPassword(string email)
         {
             string normalicedEmail = email?.Trim().ToLower();
@@ -180,9 +180,9 @@ namespace INTELIGENTE_SAZÓN.Services
             return temporaryPassword;
         }
 
-        /// <summary>
-        /// Generates a random string for the temporary password.
-        /// </summary>
+        // ===========================================================
+        // GENERAR UNA CONTRASEÑA RANDOM
+        // ===========================================================
         private string GenerateTemporaryPassword(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
