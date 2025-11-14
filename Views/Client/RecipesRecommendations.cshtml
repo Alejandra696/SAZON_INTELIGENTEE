@@ -1,0 +1,253 @@
+﻿@model List<INTELIGENTE_SAZÓN.Dtos.RecipeRecommendationDto>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Recomendación de Recetas</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        body {
+            background-color: #EAD9FF;
+            font-family: 'Cooper Black', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: transparent;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            margin: 5px auto;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 55px;
+            margin-bottom: 30px;
+            color: #3e0066;
+        }
+
+        .recipes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* ===== TARJETA DE RECETA ===== */
+        .recipe-card {
+            background: #d9b6ff;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+            .recipe-card:hover {
+                transform: scale(1.02);
+            }
+
+        .recipe-header {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        .recipe-image {
+            width: 200px;
+            height: 230px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #f8f8f8;
+        }
+
+        .recipe-info {
+            flex: 1;
+        }
+
+        .recipe-title {
+            font-size: 40px;
+            color: #3e0066;
+            margin-bottom: 8px;
+        }
+
+        .badge-match {
+            background: #c8ffd4;
+            color: #165b28;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 18px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .heart-btn {
+            font-size: 50px;
+            color: #80004f;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: transform 0.2s;
+            float: right;
+            margin-top: -20px;
+        }
+
+            .heart-btn:hover {
+                transform: scale(1.2);
+            }
+
+            .heart-btn.fav {
+            color: #80004f;
+            }
+
+        /* ===== BLOQUES DE TEXTO ===== */
+        .ingredients-box, .instruc-box {
+            background: #e8d4ff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+            color: #2c003e;
+            font-size: 20px;
+        }
+
+            .ingredients-box strong,
+            .instruc-box strong {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 25px;
+            }
+
+        .instruc-box {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background-color: #a06fff;
+            color: #2B144D;
+            padding: 15px 40px;
+            border-radius: 14px;
+            font-size: 20px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+
+            .btn-secondary:hover {
+                background-color: #a06fff;
+                transform: scale(1.05);
+            }
+
+        .alert {
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background-color: #e6f4ea;
+            color: #2b7a3a;
+        }
+
+        .alert-info {
+            background-color: #f0e6ff;
+            color: #4a0072;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Recomendación de Recetas</h2>
+
+        @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+        {
+            <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        }
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="alert alert-info">No hay recetas recomendadas por el momento.</div>
+        }
+        else
+        {
+            <div class="recipes-container">
+                @foreach (var r in Model)
+                {
+                    <div class="recipe-card" data-recipeid="@r.ID_Recipe">
+                        <div class="recipe-header">
+                            <img src="@Url.Content(r.imag_Recipe ?? "~/Content/images/default_recipe.png")" alt="@r.name_Recipe" class="recipe-image" />
+                            <div class="recipe-info">
+                                <div class="recipe-title">@r.name_Recipe</div>
+                                <div class="badge-match">@r.matchedIngredients / @r.totalIngredients</div>
+                                <button class="heart-btn @(r.IsFavorite ? "fav" : "") btn-toggle-fav" data-recipe="@r.ID_Recipe" title="Agregar a favoritos">
+                                    <i class="fa@(r.IsFavorite ? "s" : "r") fa-heart"></i>
+                                </button>
+
+                                <div class="ingredients-box">
+                                    <strong>Ingredientes:</strong>
+                                    @{
+                                        var ingredientesTexto = string.Join(", ", r.Ingredients.Select(i => $"{i.name_Food} ({i.amount_Ingred} {i.unitName})"));
+                                    }
+                                    <span>@ingredientesTexto</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="instruc-box">
+                            <strong>Preparación:</strong>
+                            <div>@Html.Raw(HttpUtility.HtmlEncode(r.instruc_Recipe).Replace("\n", "<br/>"))</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div style="margin-top:30px; text-align:center;">
+            <a href="@Url.Action("ClientPrincipalUser","User")" class="btn-secondary">VOLVER</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $('.btn-toggle-fav').on('click', function(e){
+                e.preventDefault();
+                var btn = $(this);
+                var recipeId = btn.data('recipe');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ToggleFavorite","Client")',
+                    data: { idRecipe: recipeId },
+                    success: function(resp){
+                        if(resp.ok){
+                            if(resp.isFavorite){
+                                btn.addClass('fav');
+                                btn.find('i').removeClass('far').addClass('fas');
+                            } else {
+                                btn.removeClass('fav');
+                                btn.find('i').removeClass('fas').addClass('far');
+                            }
+                        } else {
+                            alert('Error: ' + resp.message);
+                        }
+                    },
+                    error: function(){
+                        alert('Error en la petición. Intenta de nuevo.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

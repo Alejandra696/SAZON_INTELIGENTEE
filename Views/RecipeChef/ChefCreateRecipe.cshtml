@@ -1,0 +1,292 @@
+﻿@{
+    ViewBag.Title = "Crear Recetas Paso a Paso";
+}
+
+<style>
+    body {
+        background-color: #EAD9FF;
+        font-family: 'Cooper Black', sans-serif;
+    }
+
+    .main-container {
+        background-color: #EAD9FF;
+        padding: 30px;
+        border-radius: 15px;
+        width: 90%;
+        margin: 0 auto;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+
+    .title {
+        font-family: 'Cooper Black';
+        color: #2e1d57;
+        font-size: 38px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .recipe-card {
+        background: #d9c9ff;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .recipe-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .recipe-name {
+        width: 90%;
+        max-width: 850px;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #bfb0ff;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Cooper Black';
+        background-color: #efeaff;
+        box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+
+    .recipe-body {
+        display: flex;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .left-column, .right-column {
+        flex: 1;
+    }
+
+    .subtitle {
+        display: block;
+        color: #2e1d57;
+        font-family: 'Cooper Black';
+        margin-bottom: 8px;
+    }
+
+    .image-upload {
+        background-color: #CBB9FF;
+        border: 2px dashed #a7a2ff;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+        .image-upload:hover {
+            background-color: #bfa9ff;
+        }
+
+        .image-upload img {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .image-upload p {
+            color: #2e1d57;
+            font-family: 'Cooper Black';
+            margin: 0;
+            font-size: 18px;
+        }
+
+    .ingredient-list {
+        background: #efeaff;
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .ingredient-item {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .instructions {
+        width: 100%;
+        height: 200px;
+        border-radius: 10px;
+        border: 1px solid #bfb0ff;
+        padding: 12px;
+        background: #efeaff;
+        box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+
+    .add-ingredient-btn {
+        margin-top: 10px;
+        background-color: #a7a2ff;
+        border: none;
+        border-radius: 10px;
+        padding: 8px 16px;
+        color: #2e1d57;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .add-ingredient-btn:hover {
+            background-color: #8D6DE8;
+        }
+
+    .actions {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .add-recipe-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #CBB9FF;
+        padding: 10px 20px;
+        border-radius: 15px;
+        gap: 25px;
+        margin-bottom: 25px;
+    }
+
+    .add-recipe-btn, .save-btn {
+        background-color: #a7a2ff;
+        color: #2e1d57;
+        border: none;
+        font-weight: bold;
+        border-radius: 12px;
+        padding: 12px 25px;
+        transition: 0.3s;
+    }
+
+        .add-recipe-btn:hover, .save-btn:hover {
+            background-color: #8D6DE8;
+        }
+
+    .raton {
+        height: 75px;
+    }
+</style>
+
+
+<div class="main-container">
+    <h2 class="title">CREAR RECETAS PASO A PASO</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @using (Html.BeginForm("ChefCreateRecipe", "RecipeChef", FormMethod.Post, new { enctype = "multipart/form-data", id = "recipeForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="recipesContainer">
+            <div class="recipe-card">
+
+                <div class="recipe-header">
+                    <input type="text" name="name_Recipe" class="recipe-name" placeholder="NOMBRE DE LA RECETA" required />
+                </div>
+
+                <div class="recipe-body">
+                    <div class="left-column">
+                        <div class="form-group">
+                            <label class="subtitle">IMAGEN DE LA RECETA</label>
+
+                            <div class="image-upload" onclick="document.getElementById('recipeImage').click()">
+                                <img id="preview" src="~/Content/Images/placeholder.png" alt=" IMAGEN DE LA RECETA" />
+                            </div>
+
+                            <!-- 🔹 aquí cambié 'files' por 'imag_File' -->
+                            <input type="file" id="recipeImage" name="imag_File" accept="image/*" style="display:none" onchange="previewImage(event)" required />
+                        </div>
+
+                        <div class="ingredients-box">
+                            <label class="subtitle">INGREDIENTES:</label>
+                            <div id="ingredientContainer" class="ingredient-list">
+                                <div class="ingredient-item">
+                                    <input type="number" name="ingredientAmount" class="form-control small-input" placeholder="Cantidad" required />
+                                    @Html.DropDownList("ingredientUnit", (SelectList)ViewBag.Units, "Unidad", new { @class = "form-control small-input", required = "required" })
+                                    @Html.DropDownList("ingredientFood", (SelectList)ViewBag.Foods, "Ingrediente", new { @class = "form-control small-input", required = "required" })
+                                </div>
+                            </div>
+
+                            <button type="button" class="add-ingredient-btn" onclick="addIngredient()">+ Agregar más ingredientes</button>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <label class="subtitle">INSTRUCCIONES PARA PREPARAR LA RECETA PASO A PASO:</label>
+
+                        <!-- 🔹 aquí cambié 'instructionsList' por 'instrucc_Recipe' -->
+                        <textarea name="instrucc_Recipe" class="form-control instructions" placeholder="Ejemplo: 1. Lava las verduras. 2. Corta la zanahoria..." required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="add-recipe-section">
+                <img src="~/Content/Images/cook.png" class="raton raton-left" alt="cook" />
+                <button type="button" class="add-recipe-btn" onclick="addRecipe()"> + AGREGAR MÁS RECETAS</button>
+                <img src="~/Content/Images/eat.png" class="raton raton-right" alt="eat" />
+            </div>
+
+            <button type="submit" class="save-btn">GUARDAR CAMBIOS</button>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const reader = new FileReader();
+            reader.onload = function () {
+                const preview = input.closest('.form-group').querySelector('#preview');
+                preview.src = reader.result;
+                preview.style.opacity = '1';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        function addIngredient() {
+            const container = event.target.closest(".recipe-card").querySelector(".ingredient-list");
+            const newItem = document.createElement("div");
+            newItem.classList.add("ingredient-item");
+            newItem.innerHTML = `
+                <input type="number" name="ingredientAmount" class="form-control small-input" placeholder="Cantidad" required />
+                <select name="ingredientUnit" class="form-control small-input" required>
+                    <option value="">Unidad</option>
+                    @foreach (var unit in (SelectList)ViewBag.Units)
+                    {
+                        <option value="@unit.Value">@unit.Text</option>
+                    }
+                </select>
+                <select name="ingredientFood" class="form-control small-input" required>
+                    <option value="">Ingrediente</option>
+                    @foreach (var food in (SelectList)ViewBag.Foods)
+                    {
+                        <option value="@food.Value">@food.Text</option>
+                    }
+                </select>
+            `;
+            container.appendChild(newItem);
+        }
+
+        function addRecipe() {
+            const container = document.getElementById("recipesContainer");
+            const firstRecipe = document.querySelector(".recipe-card");
+            const clone = firstRecipe.cloneNode(true);
+            clone.querySelectorAll("input, textarea").forEach(el => el.value = "");
+            container.appendChild(clone);
+        }
+    </script>
+}

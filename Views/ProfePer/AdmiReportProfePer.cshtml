@@ -1,0 +1,174 @@
+﻿@model INTELIGENTE_SAZÓN.Dtos.DashboardReportDtos
+@{
+    ViewBag.Title = "Visualizar los reportes mensuales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #e9dbff;
+        font-family: "Cooper Black", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .reports-wrap {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .main-title {
+        font-size: 42px;
+        color: #2b193e;
+        text-align: center;
+        margin-bottom: 40px;
+        letter-spacing: 1px;
+    }
+
+    .reports-box {
+        position: relative;
+        background-color: #cdb8ff;
+        border: 3px solid #a58be7;
+        border-radius: 20px;
+        padding: 40px;
+        width: 90%;
+        max-width: 950px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .reports-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .report-item {
+        background-color: #bca9f7;
+        border-radius: 30px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+        .report-item h3 {
+            font-size: 20px;
+            color: #2b193e;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+    .oval {
+        background-color: #e7dbff;
+        border-radius: 25px;
+        width: 90%;
+        margin: 0 auto 15px;
+        padding: 12px;
+        font-size: 28px;
+        color: #2b193e;
+        font-weight: 800;
+    }
+
+    .btn-download {
+        background-color: #a694f9;
+        color: #2b193e;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 15px;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+        .btn-download:hover {
+            background-color: #8f7de7;
+        }
+
+    .raton {
+        width: 110px;
+        height: auto;
+    }
+
+    .raton-left {
+        position: absolute;
+        left: 20px;
+        bottom: 40px;
+    }
+
+    .raton-right {
+        position: absolute;
+        right: 35px;
+        top: 40px;
+    }
+
+    .cancel-wrap {
+        margin-top: 35px;
+    }
+
+    .btn-cancel {
+        background-color: #bba9f7;
+        color: #2b193e;
+        border: none;
+        padding: 12px 35px;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .btn-cancel:hover {
+            background-color: #a18ce7;
+        }
+</style>
+
+<div class="reports-wrap">
+    <h1 class="main-title">VISUALIZAR LOS REPORTES MENSUALES</h1>
+
+    <div class="reports-box">
+        <img src="~/Content/Images/Scared.png" alt="Scared" class="raton raton-left" />
+
+        <div class="reports-grid">
+            <!-- USUARIOS REGISTRADOS (superior izquierda) -->
+            <div class="report-item">
+                <h3>USUARIOS REGISTRADOS</h3>
+                <div class="oval">@Model.TotalUsers</div>
+                <a href="@Url.Action("DownloadReport", "ProfePer", new { type = "usuariosregistrados" })" class="btn-download">DESCARGAR PDF</a>
+            </div>
+
+            <!-- USUARIOS RETIRADOS (superior derecha) -->
+            <div class="report-item">
+                <h3>USUARIOS RETIRADOS</h3>
+                <div class="oval">@Model.InactiveUsers</div>
+                <a href="@Url.Action("DownloadReport", "ProfePer", new { type = "retirados" })" class="btn-download">DESCARGAR PDF</a>
+            </div>
+
+            <!-- USUARIOS NUEVOS (inferior izquierda) -->
+            <div class="report-item">
+                <h3>USUARIOS NUEVOS</h3>
+                <div class="oval">@Model.NewUsers</div>
+                <a href="@Url.Action("DownloadNewUsersReport", "ProfePer", new { type = "nuevos" })" class="btn-download">DESCARGAR PDF</a>
+            </div>
+
+            <!-- USUARIOS ACTIVOS (inferior derecha) -->
+            <div class="report-item">
+                <h3>USUARIOS ACTIVOS</h3>
+                <div class="oval">@Model.ActiveUsers</div>
+                <a href="@Url.Action("DownloadReport", "ProfePer", new { type = "activos" })" class="btn-download">DESCARGAR PDF</a>
+            </div>
+        </div>
+
+        <img src="~/Content/Images/Smiling.png" alt="Smiling" class="raton raton-right" />
+    </div>
+
+    <div class="cancel-wrap">
+        <a href="@Url.Action("AdmiPrincipalUser", "User")" class="btn-cancel">CANCELAR</a>
+    </div>
+</div>

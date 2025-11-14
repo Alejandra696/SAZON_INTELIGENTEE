@@ -1,0 +1,215 @@
+﻿@model IEnumerable<INTELIGENTE_SAZÓN.Dtos.ProfessionalProfileDtos>
+
+@{
+    ViewBag.Title = "Activar / Desactivar Perfiles Profesionales";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // ajusta si usas otro layout
+}
+
+<style>
+    /* ===== FONDO GENERAL ===== */
+    body {
+        background-color: #f3eaff;
+        font-family: "Cooper Black", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .admin-wrap {
+        background: #d6c8f7;
+        padding: 35px;
+        border-radius: 16px;
+        max-width: 850px;
+        width: 100%;
+        margin: 90px auto 40px;
+    }
+
+    /* ===== TÍTULO ===== */
+    .admin-title {
+        font-size: 42px;
+        color: #1e1432;
+        text-align: center;
+        font-weight: 900;
+        margin-bottom: 28px;
+        letter-spacing: 1px;
+    }
+
+    /* ===== CONTENEDOR DE LAS TARJETAS ===== */
+    .cards-container {
+        background: #dcd0fb;
+        border-radius: 14px;
+        padding: 25px;
+    }
+
+    /* ===== TARJETA DE CADA PERFIL ===== */
+    .profile-card {
+        background: #e8e4fa;
+        border-radius: 12px;
+        padding: 18px 24px;
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    /* ===== COLUMNA IZQUIERDA ===== */
+    .profile-left p {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1e1432;
+        margin: 6px 0;
+    }
+
+    .muted {
+        font-weight: 600;
+        color: #2b193e;
+    }
+
+    /* ===== COLUMNA DERECHA ===== */
+    .profile-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .status-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .status-label {
+        font-size: 17px;
+        font-weight: 700;
+        color: #1e1432;
+    }
+
+    /* ===== SWITCH ===== */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 52px;
+        height: 28px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #b0a4cf;
+        border-radius: 34px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+    input:checked + .slider {
+        background-color: #2b193e;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+    /* ===== TIEMPO LABORADO ===== */
+    .time-labo {
+        font-size: 16px;
+        color: #1e1432;
+        font-weight: 700;
+        margin-top: 5px;
+    }
+
+    /* ===== BOTÓN GUARDAR CAMBIOS ===== */
+    .save-wrap {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn-save {
+        background: #a6a6ff;
+        color: #1e1432;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 14px;
+        font-size: 20px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+
+        .btn-save:hover {
+            background: #9586f5;
+        }
+</style>
+
+<div class="admin-wrap">
+    <h1 class="admin-title">ACTIVAR O DESACTIVAR PERFILES PROFESIONALES</h1>
+
+    <!-- ===== EJECUCIÓN ===== -->
+    @using (Html.BeginForm("AdmiActivePerUser", "ProfePer", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="cards-container">
+            @{
+                var list = Model?.ToList() ?? new List<INTELIGENTE_SAZÓN.Dtos.ProfessionalProfileDtos>();
+            }
+
+            @for (int i = 0; i < list.Count; i++)
+            {
+                var p = list[i];
+                <div class="profile-card">
+                    <div class="profile-left">
+                        <p><strong>Nombre:</strong> <span class="muted">@p.name_User_Profile</span></p>
+                        <p><strong>Rol:</strong> <span class="muted">@((p.ID_Role == 2) ? "Chef" : (p.ID_Role == 3 ? "Ingeniero de Alimentos" : "Otro"))</span></p>
+                    </div>
+
+                    <div class="profile-right">
+                        <div class="status-row">
+                            <span class="status-label">Inactivo</span>
+
+                            <!-- Envío de datos en lista -->
+                            <input type="hidden" name="profiles[@i].ID_Profile" value="@p.ID_Profile" />
+                            <input type="hidden" name="profiles[@i].status_Profile" value="false" />
+                            <label class="switch">
+                                <input type="checkbox" name="profiles[@i].status_Profile" value="true" @((p.status_Profile ?? false) ? "checked" : "") />
+                                <span class="slider"></span>
+                            </label>
+
+                            <span class="status-label">Activo</span>
+                        </div>
+
+                        <div class="time-labo">
+                            <strong>Tiempo laborado:</strong>
+                            <span class="muted">@(!string.IsNullOrEmpty(p.time_labo) ? p.time_labo : "-")</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="save-wrap">
+            <button type="submit" class="btn-save">GUARDAR CAMBIOS</button>
+        </div>
+    }
+</div>

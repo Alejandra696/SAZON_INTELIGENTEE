@@ -1,0 +1,168 @@
+﻿@model List<INTELIGENTE_SAZÓN.Dtos.RecipeRecommendationDto>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Recetas Favoritas</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body {
+            background-color: #EAD9FF;
+            font-family: 'Cooper Black', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fav {
+            background-color: #EAD9FF;
+            width: 90%;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 40px;
+            color: #3e0066;
+        }
+
+        .recipes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .recipe-card {
+            background: #d9b6ff;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .recipe-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+        }
+
+        .recipe-image {
+            width: 200px;
+            height: 150px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #f8f8f8;
+        }
+
+        .recipe-info {
+            flex: 1;
+        }
+
+        .recipe-title {
+            font-size: 30px;
+            color: #3e0066;
+            margin-bottom: 10px;
+        }
+
+        .heart-icon {
+            font-size: 50px;
+            color: #80004f;
+            float: right;
+            margin-top: -60px;
+        }
+
+        .ingredients-box {
+            background: #e8d4ff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            color: #2c003e;
+            font-size: 20px;
+        }
+
+        .instruc-box {
+            background: #e8d4ff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+            color: #2c003e;
+            font-size: 20px;
+        }
+
+            .ingredients-box strong, .instruc-box strong {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 22px;
+            }
+
+        .btn-back {
+            display: inline-block;
+            background-color: #b388ff;
+            color: #2c003e;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 45px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, background 0.3s;
+            margin-top: 40px;
+        }
+
+            .btn-back:hover {
+                background-color: #a06fff;
+                transform: scale(1.05);
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container-fav">
+        <h2>¡AQUÍ ENCONTRARÁS TODAS TUS RECETAS FAVS!</h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-info">No tienes recetas marcadas como favoritas.</div>
+        }
+        else
+        {
+            <div class="recipes-container">
+                @foreach (var recipe in Model)
+                {
+                    <div class="recipe-card">
+                        <div class="recipe-header">
+                            <img src="@Url.Content(recipe.imag_Recipe ?? "~/Content/images/default_recipe.png")" alt="@recipe.name_Recipe" class="recipe-image" />
+                            <div class="recipe-info">
+                                <div class="recipe-title">@recipe.name_Recipe</div>
+                                <i class="fas fa-heart heart-icon"></i>
+                                <div class="ingredients-box">
+                                    <strong>Ingredientes:</strong>
+                                    @{
+                                        var ingredientesTexto = string.Join(", ", recipe.Ingredients.Select(i => $"{i.name_Food} ({i.amount_Ingred})"));
+                                    }
+                                    <span>@ingredientesTexto</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="instruc-box">
+                            <strong>Instrucciones:</strong>
+                            <div>@Html.Raw(HttpUtility.HtmlEncode(recipe.instruc_Recipe).Replace("\n", "<br/>"))</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div style="text-align:center;">
+            <a href="@Url.Action("ClientPrincipalUser", "User")" class="btn-back">VOLVER</a>
+        </div>
+    </div>
+</body>
+</html>

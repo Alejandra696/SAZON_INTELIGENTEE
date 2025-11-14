@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "OPCIONES DEL INGENIERO DE ALIMENTOS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #e6d6fa;
+        font-family: "Cooper Black", sans-serif;
+    }
+
+    .engineer-container {
+        background-color: #d9c9ff;
+        width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .engineer-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+        .engineer-header img {
+            width: 85px;
+            margin-right: 20px;
+        }
+
+        .engineer-header h1 {
+            font-size: 35px;
+            font-weight: bold;
+            color: #3a2a6a;
+            margin: 0;
+        }
+
+    .engineer-subtitle {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #4a4a4a;
+    }
+
+    .engineer-buttons button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+        background-color: #a6a6ff;
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 16px;
+        color: #222;
+        cursor: pointer;
+    }
+
+        .engineer-buttons button:hover {
+            background-color: #8d8df5;
+        }
+</style>
+
+<div class="engineer-container">
+    <div class="engineer-header">
+        <img src="~/Content/images/ImagenIngePrin.jpg" alt="Logo del Ingeniero de Alimentos" />
+        <h1>¡HOLAA INGE DE ALIMENTOS!</h1>
+    </div>
+    <p class="engineer-subtitle">Selecciona la opción a la cual deseas acceder:</p>
+
+    <div class="engineer-buttons">
+        <button onclick="location.href='@Url.Action("EngiRegisterFood", "FoodEngi")'">
+            REGISTRO DEL TIEMPO ÓPTIMO PARA CONSUMO DE LOS ALIMENTOS PERECEDEROS
+        </button>
+        <button onclick="location.href='@Url.Action("EngiSpeciFood", "FoodEngi")'">
+            SUGERENCIAS DE CONSERVACIÓN DE LOS ALIMENTOS PERECEDEROS
+        </button>
+        <button onclick="location.href='@Url.Action("Maintenance", "User")'">
+            ACTUALIZAR ESPECIFICACIONES DE ALIMENTOS PERECEDEROS
+        </button>
+        <button onclick="location.href='@Url.Action("ClientPrincipalUser", "User")'">
+            INGRESAR COMO USUARIO 
+        </button>
+    </div>
+</div>

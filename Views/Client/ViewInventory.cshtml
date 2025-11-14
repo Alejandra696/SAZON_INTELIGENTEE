@@ -1,0 +1,193 @@
+﻿@model Dictionary<string, List<INTELIGENTE_SAZÓN.Dtos.InventoryItemDto>>
+
+@{
+    ViewBag.Title = "Visualizar Inventario";
+}
+
+<style>
+
+    body {
+        background-color: #EAD9FF;
+        font-family: 'Cooper Black', sans-serif;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 52px;
+        margin-top: 20px;
+        margin-bottom: 35px;
+        color: #2B144D;
+        font-weight: bold;
+    }
+
+    .container-inventory {
+        width: 95%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 25px;
+    }
+
+    .category-box {
+        background: #D6C8F2;
+        border: 3px solid #A48EDB;
+        border-radius: 15px;
+        padding: 15px 20px;
+    }
+
+    .category-title {
+        font-size: 40px;
+        font-weight: bold;
+        color: #2B144D;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .food-card {
+        background: #EDE5FF;
+        border: 2px solid #BBA7EA;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 10px;
+        align-items: start;
+    }
+
+    .food-info p {
+        margin: 2px 0;
+        font-size: 22px;
+        color: #2A145E;
+    }
+
+    .food-image-box {
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #CCC;
+        width: 100%;
+        height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+        .food-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .suggestion-box {
+        grid-column: span 2;
+        background: #F5EEFF;
+        border-radius: 10px;
+        border: 1px solid #C9B6ED;
+        padding: 10px;
+        margin-top: 10px;
+        color: #3A1A6E;
+    }
+
+    .empty-message {
+        font-size: 22px;
+        color: #4B2E83;
+        background: #EDE5FF;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .back-btn {
+        display: block;
+        width: 250px;
+        margin: 40px auto;
+        padding: 12px;
+        font-size: 22px;
+        text-align: center;
+        background: #C6B3F7;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        color: #2B144D;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .back-btn:hover {
+            background: #b29ce9;
+        }
+</style>
+
+<h1 class="title">VISUALIZAR EL INVENTARIO</h1>
+
+<div class="container-inventory">
+
+    @{
+        // Orden de categorías
+        var orderedCategories = new List<string>
+    {
+            "Proteinas",
+            "Lacteos",
+            "Cereales y harinas",
+            "Vegetales",
+            "Frutas",
+            "Otros"
+        };
+
+        // Emojis representativos
+        var icons = new Dictionary<string, string>
+    {
+            { "Proteinas", "🥩" },
+            { "Lacteos", "🧀" },
+            { "Cereales y harinas", "🌾" },
+            { "Vegetales", "🥗" },
+            { "Frutas", "🍓" },
+            { "Otros", "🍱" }
+        };
+    }
+
+    @foreach (var cat in orderedCategories)
+    {
+        <div class="category-box">
+            <div class="category-title">
+                @cat @((icons.ContainsKey(cat)) ? icons[cat] : "")
+            </div>
+
+            @if (Model.ContainsKey(cat) && Model[cat].Count > 0)
+            {
+                foreach (var item in Model[cat])
+                {
+                    <div class="food-card">
+
+                        <div class="food-info">
+                            <p><strong>Nombre del alimento:</strong> @item.FoodName</p>
+                            <p><strong>Cantidad:</strong> @item.Amount</p>
+                            <p><strong>Tiempo óptimo:</strong> @item.OptimalTime días</p>
+                        </div>
+
+                        <div class="food-image-box">
+                            <img src="@item.ImageUrl" alt="Imagen alimento" />
+                        </div>
+
+                        <div class="suggestion-box">
+                            <strong>Sugerencia de conservación:</strong>
+                            <p>@item.Suggestion</p>
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="empty-message">🍽️ No hay alimentos registrados en esta categoría.</p>
+            }
+        </div>
+    }
+
+</div>
+
+<a href="@Url.Action("ClientPrincipalUser", "User")" class="back-btn">VOLVER</a>

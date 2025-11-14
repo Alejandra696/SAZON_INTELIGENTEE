@@ -1,0 +1,193 @@
+﻿@model List<INTELIGENTE_SAZÓN.Dtos.FoodEngiDtos>
+
+@{
+    ViewBag.Title = "Sugerencias de Conservación de Alimentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: #eadcff;
+        font-family: 'Cooper Black', Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 950px;
+        margin: 30px auto;
+        background: #d9c9ff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2e1d57;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+    .message {
+        text-align: center;
+        color: green;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    .error {
+        text-align: center;
+        color: darkred;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    .food-card {
+        background: #efeaff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .food-img {
+        width: 110px;
+        height: 110px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #fff;
+        flex-shrink: 0;
+    }
+
+    .food-info {
+        flex: 1;
+        margin-left: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .food-info h3 {
+            margin: 0;
+            color: #3a2c77;
+            font-size: 25px;
+        }
+
+        .food-info p {
+            margin: 6px 0 10px;
+            color: #4d3f8a;
+            font-size: 15px;
+        }
+
+    .suggest-box {
+        width: 100%;
+        min-height: 70px;
+        border-radius: 10px;
+        border: 1px solid #bfb0ff;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        resize: none;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .btn-save {
+        background: #a7a2ff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 24px;
+        font-weight: bold;
+        color: #2e1d57;
+        cursor: pointer;
+        align-self: center;
+        transition: 0.2s ease;
+    }
+
+        .btn-save:hover {
+            background: #958cff;
+            transform: scale(1.05);
+        }
+
+    .right-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .btn-back {
+        display: block;
+        margin: 30px auto 0;
+        padding: 12px 36px;
+        border-radius: 12px;
+        background: #c1b8ff;
+        border: none;
+        font-weight: bold;
+        color: #2e1d57;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+        .btn-back:hover {
+            background: #ada2ff;
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="container">
+    <div class="header">
+        <h1>SUGERENCIAS DE CONSERVACIÓN DE LOS ALIMENTOS PERECEDEROS</h1>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="message">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="error">@TempData["Error"]</div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            using (Html.BeginForm("EngiSpeciFoodSave", "FoodEngi", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("ID_Specif_Food", item.ID_Specif_Food)
+
+                <div class="food-card">
+                    <img src="@item.imag_Food" class="food-img" alt="Imagen del alimento" />
+
+                    <div class="food-info">
+                        <h3>@item.name_Food</h3>
+                        <p><strong>Tiempo óptimo:</strong> @item.time_Opet_Days días</p>
+
+                        <textarea name="sugges_Conser_Food" class="suggest-box" placeholder="Escribe aquí las sugerencias de conservación de cada alimento">@item.sugges_Conser_Food</textarea>
+                    </div>
+
+                    <div class="right-section">
+                        <button type="submit" class="btn-save"> GUARDAR</button>
+                    </div>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <p style="text-align:center; color:#3a2c77;">No hay alimentos registrados aún.</p>
+    }
+
+    <form action="@Url.Action("EngineerPrincipalUser", "User")" method="get">
+        <button type="submit" class="btn-back">VOLVER AL MENÚ PRINCIPAL</button>
+    </form>
+</div>
