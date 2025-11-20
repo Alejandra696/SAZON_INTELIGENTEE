@@ -319,9 +319,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\RegisterUser.cshtml" />
     <Content Include="Views\User\SucessUser.cshtml" />
     <Content Include="Views\User\LoginUser.cshtml" />
@@ -339,6 +336,7 @@
     <Content Include="Views\Client\ViewInventory.cshtml" />
     <Content Include="Views\Client\FavoriteRecipes.cshtml" />
     <Content Include="Views\Client\RecipesRecommendations.cshtml" />
+    <Content Include="Views\User\Maintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

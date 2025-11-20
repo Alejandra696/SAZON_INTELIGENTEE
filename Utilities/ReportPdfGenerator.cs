@@ -11,13 +11,15 @@ namespace INTELIGENTE_SAZÓN.Utilities
 {
     public static class ReportPdfGenerator
     {
+        //============================================================
+        // REPORTE: USUARIOS NUEVOS (ÚLTIMO MES)
+        // ============================================================
         public static byte[] GenerateNewUsersPdf(List<UserCombinedDtos> usuarios, string usuario)
         {
             try
             {
                 using (var ms = new MemoryStream())
                 {
-                    // Tamaño base (igual al que ya tenías)
                     float width = 756 * 0.75f;
                     float height = 1066 * 0.75f;
                     var pageSize = new Rectangle(width, height);
@@ -25,7 +27,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
                     PdfWriter writer = PdfWriter.GetInstance(doc, ms);
                     doc.Open();
 
-                    // Cargar fondo si existe
+                    // ===== FONDO =====
                     string fondoPath = HttpContext.Current.Server.MapPath("~/Content/Images/BackgroundReports.png");
                     iTextSharp.text.Image fondoImg = null;
                     if (File.Exists(fondoPath))
@@ -35,78 +37,77 @@ namespace INTELIGENTE_SAZÓN.Utilities
                         fondoImg.ScaleAbsolute(width, height);
                     }
 
-                    // Fuentes
-                    BaseFont fontUsuarios = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-                    BaseFont fontNuevos = BaseFont.CreateFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    // ===== FUENTES =====
+                    BaseFont fontTitulo = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    BaseFont fontSub = BaseFont.CreateFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                     BaseFont fontTabla = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 
-                    // Parámetros visuales de la tabla
+                    // ===== MÁRGENES Y MEDIDAS =====
                     float marginLeft = 45;
                     float marginRight = 45;
                     float tablaX = marginLeft;
                     float tablaAncho = width - marginLeft - marginRight;
                     float filaAltura = 36f;
 
-                    // Área disponible vertical para la tabla en cada página:
-                    // Dejamos espacio arriba para título y cuadro total, y abajo para el pie.
-                    float topSpace = 150f;   // espacio para encabezado (ajusta si hace falta)
-                    float bottomSpace = 90f; // espacio para pie con fecha/hora
+                    float topSpace = 150f;
+                    float bottomSpace = 90f;
+
                     float tablaAvailableHeight = height - topSpace - bottomSpace;
 
-                    // Columnas (manteniendo las proporciones originales)
-                    float col1 = tablaX;
-                    float col2 = tablaX + 55;
-                    float col3 = tablaX + 230;
-                    float col4 = tablaX + 400;
+                    // ===== COLUMNAS (MISMA DISTRIBUCIÓN QUE RETIRADOS) =====
+                    float col1 = tablaX;         // ID
+                    float col2 = tablaX + 55;    // Nombre
+                    float col3 = tablaX + 190;   // Correo
+                    float col4 = tablaX + 370;   // Fecha Registro
                     float col5 = tablaX + tablaAncho;
+
                     float[] columnas = { col1, col2, col3, col4, col5 };
 
-                    // Calcular filas por página (restamos 1 para header)
                     int filasPorPagina = Math.Max(1, (int)Math.Floor(tablaAvailableHeight / filaAltura) - 1);
 
-                    // Helper local para dibujar encabezado y cuadro de total en la página actual
-                    void DrawPageHeaderAndBox(PdfContentByte cb, int TotalUsuarios)
+                    // ============================================================
+                    // ENCABEZADO
+                    // ============================================================
+                    void DrawHeader(PdfContentByte cb, int total)
                     {
-                        // fondo
                         if (fondoImg != null)
-                        {
                             cb.AddImage(fondoImg);
-                        }
 
-                        // Títulos grandes top-left
+                        // TÍTULO
                         cb.BeginText();
-                        cb.SetFontAndSize(fontUsuarios, 55);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 60, height - 75, 0);
-                        cb.SetFontAndSize(fontNuevos, 37);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "NUEVOS", 185, height - 110, 0);
+                        cb.SetFontAndSize(fontTitulo, 50);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 50, height - 75, 0);
+
+                        cb.SetFontAndSize(fontSub, 33);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "NUEVOS", 230, height - 110, 0);
                         cb.EndText();
 
-                        // Cuadro con total (top-right)
+                        // CUADRO TOTAL
                         float cuadroX = width - 170;
                         float cuadroY = height - 75 - 28;
                         float cuadroAncho = 120;
                         float cuadroAlto = 40;
+
                         cb.SetLineWidth(1.5f);
                         cb.SetColorStroke(new BaseColor(0xD9, 0xCF, 0xEB));
                         cb.Rectangle(cuadroX, cuadroY - cuadroAlto, cuadroAncho, cuadroAlto);
                         cb.Stroke();
 
                         cb.BeginText();
-                        cb.SetFontAndSize(fontNuevos, 24);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, TotalUsuarios.ToString(), cuadroX + cuadroAncho / 2, cuadroY - 25, 0);
+                        cb.SetFontAndSize(fontSub, 24);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, total.ToString(), cuadroX + cuadroAncho / 2, cuadroY - 25, 0);
                         cb.EndText();
 
-                        // Dibujar rectángulo de tabla (aquí se hace referencia al área de la tabla)
-                        float totalFilasVisual = filasPorPagina + 1; // header + filasPorPagina
+                        // TABLA
+                        float totalFilasVisual = filasPorPagina + 1;
                         float tablaAltura = totalFilasVisual * filaAltura;
-                        float tablaY = height - topSpace; // top de la tabla
+                        float tablaY = height - topSpace;
 
                         cb.SetLineWidth(1.3f);
                         cb.SetColorStroke(new BaseColor(0xD9, 0xCF, 0xEB));
                         cb.Rectangle(tablaX, tablaY - tablaAltura, tablaAncho, tablaAltura);
                         cb.Stroke();
 
-                        // Columnas verticales
                         foreach (float col in columnas)
                         {
                             cb.MoveTo(col, tablaY);
@@ -114,7 +115,6 @@ namespace INTELIGENTE_SAZÓN.Utilities
                             cb.Stroke();
                         }
 
-                        // Líneas horizontales (header + separadores suficientes)
                         for (int i = 0; i <= filasPorPagina + 1; i++)
                         {
                             float y = tablaY - (i * filaAltura);
@@ -123,82 +123,69 @@ namespace INTELIGENTE_SAZÓN.Utilities
                             cb.Stroke();
                         }
 
-                        // Encabezados de columna (centrados)
+                        // ENCABEZADOS DE COLUMNA
                         cb.BeginText();
-                        cb.SetFontAndSize(fontNuevos, 10);
-                        float encabezadoCentro = tablaY - (filaAltura / 2) + 5;
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ID", (col1 + col2) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "NOMBRE", (col2 + col3) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "CORREO", (col3 + col4) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "FECHA DE REGISTRO", (col4 + col5) / 2, encabezadoCentro + 3, 0);
+                        cb.SetFontAndSize(fontSub, 10);
+                        float center = tablaY - (filaAltura / 2) + 5;
+
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ID", (col1 + col2) / 2, center + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "NOMBRE", (col2 + col3) / 2, center + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "CORREO", (col3 + col4) / 2, center + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "FECHA DE REGISTRO", (col4 + col5) / 2, center + 3, 0);
+
                         cb.EndText();
                     }
 
-                    // Helper para dibujar pie (fecha/hora/usuario) en la página actual
+                    // ============================================================
+                    // FOOTER
+                    // ============================================================
                     void DrawFooter(PdfContentByte cb)
                     {
                         cb.BeginText();
-                        cb.SetFontAndSize(fontNuevos, 13);
+                        cb.SetFontAndSize(fontSub, 13);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Fecha del Reporte: {DateTime.Now:dd/MM/yyyy}", 55, 65, 0);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Hora del Reporte: {DateTime.Now:HH:mm:ss}", 55, 50, 0);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: {usuario}", 55, 35, 0);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: Administrador del Sistema.", 55, 35, 0);
                         cb.EndText();
                     }
 
-                    // Comenzamos a escribir datos por páginas
-                    var cbGlobal = writer.DirectContent;
+                    // ============================================================
+                    // GENERACIÓN DE PÁGINAS
+                    // ============================================================
                     int totalUsuarios = usuarios?.Count ?? 0;
                     int pagina = 0;
                     int index = 0;
 
                     while (index < totalUsuarios || (totalUsuarios == 0 && pagina == 0))
                     {
-                        if (pagina > 0) doc.NewPage(); // nueva página si no es la primera
+                        if (pagina > 0) doc.NewPage();
                         pagina++;
 
-                        var cb = writer.DirectContent; // contenido de esta página
+                        var cb = writer.DirectContent;
+                        DrawHeader(cb, totalUsuarios);
 
-                        // Dibujar encabezado (incluye recuadro y encabezado de tabla)
-                        DrawPageHeaderAndBox(cb, totalUsuarios);
-
-                        // Coordenada Y del top de la tabla en esta página
                         float tablaTopY = height - topSpace;
-                        // El header ocupa la primera fila; los datos comienzan en (fila 1..filasPorPagina)
-                        float yStartForRows = tablaTopY - filaAltura; // primer y de fila de datos (centrado se calculará)
+                        float yStartForRows = tablaTopY - filaAltura;
 
-                        // Dibujar filas de esta página
                         cb.BeginText();
                         cb.SetFontAndSize(fontTabla, 10);
 
-                        int filasEnEstaPagina = 0;
                         for (int r = 0; r < filasPorPagina && index < totalUsuarios; r++, index++)
                         {
                             var u = usuarios[index];
                             float y = yStartForRows - (r * filaAltura);
                             float centerY = y - (filaAltura / 2) + 5;
 
-                            // ID (numero secuencial global)
                             cb.ShowTextAligned(Element.ALIGN_CENTER, (index + 1).ToString(), (col1 + col2) / 2, centerY, 0);
-
-                            // Nombre - se limita a una cadena razonable; si es larga no saldrá del recuadro (si necesitas wrap, habría que usar ColumnText)
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Name ?? "-"), (col2 + 5), centerY, 0);
-
-                            // Correo - centrado/izquierda dependiendo de tu diseño
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Email ?? "-"), (col3 + 5), centerY, 0);
-
-                            // Fecha
+                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Name ?? "-"), col2 + 5, centerY, 0);
+                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Email ?? "-"), col3 + 5, centerY, 0);
                             cb.ShowTextAligned(Element.ALIGN_CENTER, (u.DateRegisUser?.ToString("yyyy-MM-dd") ?? "-"), (col4 + col5) / 2, centerY, 0);
-
-                            filasEnEstaPagina++;
                         }
 
                         cb.EndText();
-
-                        // Pie
                         DrawFooter(cb);
                     }
 
-                    // cerrar doc y devolver bytes
                     doc.Close();
                     return ms.ToArray();
                 }
@@ -209,6 +196,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
                 return new byte[0];
             }
         }
+
 
         //============================================================
         // REPORTE: USUARIOS REGISTRADOS (TODOS)
@@ -253,9 +241,9 @@ namespace INTELIGENTE_SAZÓN.Utilities
 
                     // Columnas: ID | ROL | CORREO | FECHA
                     float col1 = tablaX;
-                    float col2 = tablaX + 80;
-                    float col3 = tablaX + 270;
-                    float col4 = tablaX + 460;
+                    float col2 = tablaX + 40;
+                    float col3 = tablaX + 190;
+                    float col4 = tablaX + 370;
                     float col5 = tablaX + tablaAncho;
                     float[] columnas = { col1, col2, col3, col4, col5 };
 
@@ -268,9 +256,9 @@ namespace INTELIGENTE_SAZÓN.Utilities
 
                         cb.BeginText();
                         cb.SetFontAndSize(fontTitulo, 50);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 60, height - 75, 0);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 50, height - 75, 0);
                         cb.SetFontAndSize(fontSub, 33);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "REGISTRADOS", 180, height - 110, 0);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "REGISTRADOS", 151, height - 110, 0);
                         cb.EndText();
 
                         float cuadroX = width - 170;
@@ -327,7 +315,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
                         cb.SetFontAndSize(fontSub, 13);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Fecha del Reporte: {DateTime.Now:dd/MM/yyyy}", 55, 65, 0);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Hora del Reporte: {DateTime.Now:HH:mm:ss}", 55, 50, 0);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: {usuario}", 55, 35, 0);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: Administrador del Sistema.", 55, 35, 0);
                         cb.EndText();
                     }
 
@@ -359,7 +347,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
 
                             cb.ShowTextAligned(Element.ALIGN_CENTER, (u.Id).ToString(), (col1 + col2) / 2, centerY, 0);
                             cb.ShowTextAligned(Element.ALIGN_CENTER, (u.RoleName ?? "-"), (col2 + col3) / 2, centerY, 0);
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Email ?? "-"), (col3 + 5), centerY, 0);
+                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Email ?? "-"), (col3 + 10), centerY, 0);
                             cb.ShowTextAligned(Element.ALIGN_CENTER, (u.DateRegisUser?.ToString("yyyy-MM-dd") ?? "-"), (col4 + col5) / 2, centerY, 0);
                             filasEnEstaPagina++;
                         }
@@ -378,8 +366,9 @@ namespace INTELIGENTE_SAZÓN.Utilities
                 return new byte[0];
             }
         }
+
         // ============================================================
-        // PDF: USUARIOS RETIRADOS
+        // REPORTE: USUARIOS RETIRADOS
         // ============================================================
         public static byte[] GenerateRetiredUsersPdf(List<UserCombinedDtos> usuarios, string usuario)
         {
@@ -394,6 +383,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
                     PdfWriter writer = PdfWriter.GetInstance(doc, ms);
                     doc.Open();
 
+                    // Fondo
                     string fondoPath = HttpContext.Current.Server.MapPath("~/Content/Images/BackgroundReports.png");
                     iTextSharp.text.Image fondoImg = null;
                     if (File.Exists(fondoPath))
@@ -403,10 +393,12 @@ namespace INTELIGENTE_SAZÓN.Utilities
                         fondoImg.ScaleAbsolute(width, height);
                     }
 
-                    BaseFont fontUsuarios = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-                    BaseFont fontSubtitulo = BaseFont.CreateFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    // Fuentes (idénticas al PDF de registrados)
+                    BaseFont fontTitulo = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    BaseFont fontSub = BaseFont.CreateFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                     BaseFont fontTabla = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 
+                    // Márgenes y medidas
                     float marginLeft = 45;
                     float marginRight = 45;
                     float tablaX = marginLeft;
@@ -416,48 +408,66 @@ namespace INTELIGENTE_SAZÓN.Utilities
                     float bottomSpace = 90f;
                     float tablaAvailableHeight = height - topSpace - bottomSpace;
 
+                    // Columnas: ID | NOMBRE | ROL | LOGIN
                     float col1 = tablaX;
-                    float col2 = tablaX + 55;
-                    float col3 = tablaX + 230;
-                    float col4 = tablaX + 400;
-                    float col5 = tablaX + tablaAncho;
+                    float col2 = tablaX + 40;     // ID
+                    float col3 = tablaX + 230;    // NOMBRE
+                    float col4 = tablaX + 370;    // ROL
+                    float col5 = tablaX + tablaAncho; // LOGIN
                     float[] columnas = { col1, col2, col3, col4, col5 };
+
                     int filasPorPagina = Math.Max(1, (int)Math.Floor(tablaAvailableHeight / filaAltura) - 1);
 
-                    void DrawHeader(PdfContentByte cb, int total)
+                    // --------------------------------------------------------------
+                    // ENCABEZADO → IGUAL A USUARIOS REGISTRADOS (solo texto cambia)
+                    // --------------------------------------------------------------
+                    void DrawPageHeader(PdfContentByte cb, int total)
                     {
-                        if (fondoImg != null) cb.AddImage(fondoImg);
+                        if (fondoImg != null)
+                            cb.AddImage(fondoImg);
+
                         cb.BeginText();
-                        cb.SetFontAndSize(fontUsuarios, 55);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 60, height - 75, 0);
-                        cb.SetFontAndSize(fontSubtitulo, 37);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "RETIRADOS", 185, height - 110, 0);
+                        cb.SetFontAndSize(fontTitulo, 50); // Tamaño reducido como pediste
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 50, height - 75, 0);
+                        cb.SetFontAndSize(fontSub, 33);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "RETIRADOS", 170, height - 110, 0);
                         cb.EndText();
 
+                        // Cuadro total (idéntico al PDF guía)
                         float cuadroX = width - 170;
                         float cuadroY = height - 75 - 28;
                         float cuadroAncho = 120;
                         float cuadroAlto = 40;
+
                         cb.SetLineWidth(1.5f);
+                        cb.SetColorStroke(new BaseColor(0xD9, 0xCF, 0xEB)); // mismo color
                         cb.Rectangle(cuadroX, cuadroY - cuadroAlto, cuadroAncho, cuadroAlto);
                         cb.Stroke();
+
                         cb.BeginText();
-                        cb.SetFontAndSize(fontSubtitulo, 24);
+                        cb.SetFontAndSize(fontSub, 24);
                         cb.ShowTextAligned(Element.ALIGN_CENTER, total.ToString(), cuadroX + cuadroAncho / 2, cuadroY - 25, 0);
                         cb.EndText();
 
+                        // Tabla contenedora
                         float totalFilasVisual = filasPorPagina + 1;
                         float tablaAltura = totalFilasVisual * filaAltura;
                         float tablaY = height - topSpace;
+
                         cb.SetLineWidth(1.3f);
+                        cb.SetColorStroke(new BaseColor(0xD9, 0xCF, 0xEB));
                         cb.Rectangle(tablaX, tablaY - tablaAltura, tablaAncho, tablaAltura);
                         cb.Stroke();
+
+                        // Líneas verticales
                         foreach (float col in columnas)
                         {
                             cb.MoveTo(col, tablaY);
                             cb.LineTo(col, tablaY - tablaAltura);
                             cb.Stroke();
                         }
+
+                        // Líneas horizontales
                         for (int i = 0; i <= filasPorPagina + 1; i++)
                         {
                             float y = tablaY - (i * filaAltura);
@@ -466,27 +476,32 @@ namespace INTELIGENTE_SAZÓN.Utilities
                             cb.Stroke();
                         }
 
+                        // Encabezados de columnas
                         cb.BeginText();
-                        cb.SetFontAndSize(fontSubtitulo, 10);
-                        float encabezadoCentro = tablaY - (filaAltura / 2) + 5;
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ID", (col1 + col2) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "NOMBRE", (col2 + col3) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ROL", (col3 + col4) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ÚLTIMO LOGIN", (col4 + col5) / 2, encabezadoCentro + 3, 0);
+                        cb.SetFontAndSize(fontSub, 10);
+                        float center = tablaY - (filaAltura / 2) + 5;
+
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ID", (col1 + col2) / 2, center + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "NOMBRE", (col2 + col3) / 2, center + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ROL", (col3 + col4) / 2, center + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ÚLTIMO LOGIN", (col4 + col5) / 2, center + 3, 0);
+
                         cb.EndText();
                     }
 
+                    // --------------------------------------------------------------
+                    // FOOTER IDENTICO AL PDF GUIA
+                    // --------------------------------------------------------------
                     void DrawFooter(PdfContentByte cb)
                     {
                         cb.BeginText();
-                        cb.SetFontAndSize(fontSubtitulo, 13);
+                        cb.SetFontAndSize(fontSub, 13);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Fecha del Reporte: {DateTime.Now:dd/MM/yyyy}", 55, 65, 0);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Hora del Reporte: {DateTime.Now:HH:mm:ss}", 55, 50, 0);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: {usuario}", 55, 35, 0);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: Administrador del Sistema.", 55, 35, 0);
                         cb.EndText();
                     }
 
-                    var cbGlobal = writer.DirectContent;
                     int totalUsuarios = usuarios?.Count ?? 0;
                     int pagina = 0;
                     int index = 0;
@@ -495,11 +510,13 @@ namespace INTELIGENTE_SAZÓN.Utilities
                     {
                         if (pagina > 0) doc.NewPage();
                         pagina++;
+
                         var cb = writer.DirectContent;
-                        DrawHeader(cb, totalUsuarios);
+                        DrawPageHeader(cb, totalUsuarios);
 
                         float tablaTopY = height - topSpace;
                         float yStartForRows = tablaTopY - filaAltura;
+
                         cb.BeginText();
                         cb.SetFontAndSize(fontTabla, 10);
 
@@ -509,9 +526,9 @@ namespace INTELIGENTE_SAZÓN.Utilities
                             float y = yStartForRows - (r * filaAltura);
                             float centerY = y - (filaAltura / 2) + 5;
 
-                            cb.ShowTextAligned(Element.ALIGN_CENTER, (index + 1).ToString(), (col1 + col2) / 2, centerY, 0);
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Name ?? "-"), (col2 + 5), centerY, 0);
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.RoleName ?? "-"), (col3 + 5), centerY, 0);
+                            cb.ShowTextAligned(Element.ALIGN_CENTER, (u.Id).ToString(), (col1 + col2) / 2, centerY, 0);
+                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Name ?? "-"), col2 + 8, centerY, 0);
+                            cb.ShowTextAligned(Element.ALIGN_CENTER, (u.RoleName ?? "-"), (col3 + col4) / 2, centerY, 0);
                             cb.ShowTextAligned(Element.ALIGN_CENTER, (u.LastLogin?.ToString("yyyy-MM-dd") ?? "-"), (col4 + col5) / 2, centerY, 0);
                         }
 
@@ -529,6 +546,8 @@ namespace INTELIGENTE_SAZÓN.Utilities
                 return new byte[0];
             }
         }
+
+
         // ============================================================
         // PDF: USUARIOS ACTIVOS (4 columnas: ID, ROL, CORREO, ÚLTIMO LOGIN)
         // ============================================================
@@ -545,6 +564,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
                     PdfWriter writer = PdfWriter.GetInstance(doc, ms);
                     doc.Open();
 
+                    // Fondo
                     string fondoPath = HttpContext.Current.Server.MapPath("~/Content/Images/BackgroundReports.png");
                     iTextSharp.text.Image fondoImg = null;
                     if (File.Exists(fondoPath))
@@ -554,10 +574,12 @@ namespace INTELIGENTE_SAZÓN.Utilities
                         fondoImg.ScaleAbsolute(width, height);
                     }
 
-                    BaseFont fontUsuarios = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-                    BaseFont fontNuevos = BaseFont.CreateFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    // Fuentes unificadas
+                    BaseFont fontTitulo = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    BaseFont fontSub = BaseFont.CreateFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                     BaseFont fontTabla = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 
+                    // Medidas
                     float marginLeft = 45;
                     float marginRight = 45;
                     float tablaX = marginLeft;
@@ -567,56 +589,68 @@ namespace INTELIGENTE_SAZÓN.Utilities
                     float bottomSpace = 90f;
                     float tablaAvailableHeight = height - topSpace - bottomSpace;
 
-                    // --- DEFINIMOS 4 COLUMNAS (posiciones)
-                    // ID | ROL | CORREO | ÚLTIMO LOGIN
+                    // === POSICIONES PROBADAS Y CORREGIDAS ===
                     float colID = tablaX;
-                    float colROL = tablaX + 70;      // limite izquierda de la columna ROL
-                    float colCORREO = tablaX + 300;  // limite izquierda columna CORREO
-                    float colLAST = tablaX + 520;    // limite izquierda columna ULTIMO LOGIN
-                    float colRight = tablaX + tablaAncho; // borde derecho
+                    float colROL = tablaX + 75;
+                    float colCORREO = tablaX + 220;
+                    float colLAST = tablaX + 400;
+                    float colRight = tablaX + tablaAncho;
+
                     float[] columnas = { colID, colROL, colCORREO, colLAST, colRight };
 
                     int filasPorPagina = Math.Max(1, (int)Math.Floor(tablaAvailableHeight / filaAltura) - 1);
 
-                    void DrawPageHeaderAndBox(PdfContentByte cb, int TotalUsuarios)
+                    // ==============================
+                    // HEADER
+                    // ==============================
+                    void DrawHeader(PdfContentByte cb, int TotalUsuarios)
                     {
                         if (fondoImg != null) cb.AddImage(fondoImg);
 
-                        // Títulos
                         cb.BeginText();
-                        cb.SetFontAndSize(fontUsuarios, 55);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 60, height - 75, 0);
-                        cb.SetFontAndSize(fontNuevos, 37);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, "ACTIVOS", 185, height - 110, 0);
+                        cb.SetFontAndSize(fontTitulo, 50);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "USUARIOS", 50, height - 75, 0);
+
+                        cb.SetFontAndSize(fontSub, 33);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, "ACTIVOS", 230, height - 110, 0);
                         cb.EndText();
 
-                        // Caja total
+                        // Caja TOTAL
                         float cuadroX = width - 170;
                         float cuadroY = height - 75 - 28;
                         float cuadroAncho = 120;
                         float cuadroAlto = 40;
+
                         cb.SetLineWidth(1.5f);
                         cb.SetColorStroke(new BaseColor(0xD9, 0xCF, 0xEB));
                         cb.Rectangle(cuadroX, cuadroY - cuadroAlto, cuadroAncho, cuadroAlto);
                         cb.Stroke();
+
                         cb.BeginText();
-                        cb.SetFontAndSize(fontNuevos, 24);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, TotalUsuarios.ToString(), cuadroX + cuadroAncho / 2, cuadroY - 25, 0);
+                        cb.SetFontAndSize(fontSub, 24);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, TotalUsuarios.ToString(),
+                                           cuadroX + cuadroAncho / 2, cuadroY - 25, 0);
                         cb.EndText();
 
-                        // Rectángulo tabla
+                        // Tabla
                         float totalFilasVisual = filasPorPagina + 1;
                         float tablaAltura = totalFilasVisual * filaAltura;
                         float tablaY = height - topSpace;
+
                         cb.SetLineWidth(1.3f);
                         cb.SetColorStroke(new BaseColor(0xD9, 0xCF, 0xEB));
                         cb.Rectangle(tablaX, tablaY - tablaAltura, tablaAncho, tablaAltura);
                         cb.Stroke();
 
-                        // Columnas verticales
-                        foreach (float col in columnas) { cb.MoveTo(col, tablaY); cb.LineTo(col, tablaY - tablaAltura); cb.Stroke(); }
+                        // Columnas
+                        foreach (float col in columnas)
+                        {
+                            cb.MoveTo(col, tablaY);
+                            cb.LineTo(col, tablaY - tablaAltura);
+                            cb.Stroke();
+                        }
 
-                        // Líneas horizontales
+                        // Líneas
                         for (int i = 0; i <= filasPorPagina + 1; i++)
                         {
                             float y = tablaY - (i * filaAltura);
@@ -625,28 +659,33 @@ namespace INTELIGENTE_SAZÓN.Utilities
                             cb.Stroke();
                         }
 
-                        // Encabezados (centrados según cada columna)
+                        // Encabezados
                         cb.BeginText();
-                        cb.SetFontAndSize(fontNuevos, 10);
-                        float encabezadoCentro = tablaY - (filaAltura / 2) + 5;
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ID", (colID + colROL) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ROL", (colROL + colCORREO) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "CORREO", (colCORREO + colLAST) / 2, encabezadoCentro + 3, 0);
-                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ÚLTIMO LOGIN", (colLAST + colRight) / 2, encabezadoCentro + 3, 0);
+                        cb.SetFontAndSize(fontSub, 10);
+                        float c = tablaY - (filaAltura / 2) + 5;
+
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ID", (colID + colROL) / 2, c + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ROL", (colROL + colCORREO) / 2, c + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "CORREO", (colCORREO + colLAST) / 2, c + 3, 0);
+                        cb.ShowTextAligned(Element.ALIGN_CENTER, "ÚLTIMO LOGIN", (colLAST + colRight) / 2, c + 3, 0);
+
                         cb.EndText();
                     }
 
+                    // FOOTER
                     void DrawFooter(PdfContentByte cb)
                     {
                         cb.BeginText();
-                        cb.SetFontAndSize(fontNuevos, 13);
+                        cb.SetFontAndSize(fontSub, 13);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Fecha del Reporte: {DateTime.Now:dd/MM/yyyy}", 55, 65, 0);
                         cb.ShowTextAligned(Element.ALIGN_LEFT, $"Hora del Reporte: {DateTime.Now:HH:mm:ss}", 55, 50, 0);
-                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: {usuario}", 55, 35, 0);
+                        cb.ShowTextAligned(Element.ALIGN_LEFT, $"Usuario: Administrador del Sistema.", 55, 35, 0);
                         cb.EndText();
                     }
 
-                    var cbGlobal = writer.DirectContent;
+                    // ==============================
+                    // GENERACIÓN DE PÁGINAS
+                    // ==============================
                     int totalUsuarios = usuarios?.Count ?? 0;
                     int pagina = 0;
                     int index = 0;
@@ -657,7 +696,7 @@ namespace INTELIGENTE_SAZÓN.Utilities
                         pagina++;
 
                         var cb = writer.DirectContent;
-                        DrawPageHeaderAndBox(cb, totalUsuarios);
+                        DrawHeader(cb, totalUsuarios);
 
                         float tablaTopY = height - topSpace;
                         float yStartForRows = tablaTopY - filaAltura;
@@ -669,16 +708,13 @@ namespace INTELIGENTE_SAZÓN.Utilities
                         {
                             var u = usuarios[index];
                             float y = yStartForRows - (r * filaAltura);
-                            float centerY = y - (filaAltura / 2) + 5;
+                            float cy = y - (filaAltura / 2) + 5;
 
-                            // ID
-                            cb.ShowTextAligned(Element.ALIGN_CENTER, (index + 1).ToString(), (colID + colROL) / 2, centerY, 0);
-                            // ROL (usamos RoleName)
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.RoleName ?? "-"), colROL + 5, centerY, 0);
-                            // CORREO
-                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Email ?? "-"), colCORREO + 5, centerY, 0);
-                            // ÚLTIMO LOGIN
-                            cb.ShowTextAligned(Element.ALIGN_CENTER, (u.LastLogin?.ToString("dd/MM/yyyy") ?? "-"), (colLAST + colRight) / 2, centerY, 0);
+                            cb.ShowTextAligned(Element.ALIGN_CENTER, (index + 1).ToString(), (colID + colROL) / 2, cy, 0);
+                            cb.ShowTextAligned(Element.ALIGN_CENTER, (u.RoleName ?? "-"), (colROL + colCORREO) / 2, cy, 0);
+                            cb.ShowTextAligned(Element.ALIGN_LEFT, (u.Email ?? "-"), colCORREO + 5, cy, 0);
+                            cb.ShowTextAligned(Element.ALIGN_CENTER, (u.LastLogin?.ToString("dd/MM/yyyy") ?? "-"),
+                                               (colLAST + colRight) / 2, cy, 0);
                         }
 
                         cb.EndText();
@@ -694,7 +730,6 @@ namespace INTELIGENTE_SAZÓN.Utilities
                 System.Diagnostics.Debug.WriteLine("Error in GenerateActiveUsersPdf: " + ex.ToString());
                 return new byte[0];
             }
-
         }
     }
 }
